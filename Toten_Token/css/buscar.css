@@ -51,6 +51,9 @@
     display: none;
     transition: all .7s;
 }
+#bg-btn{
+    background-color: #003F56;
+}
 
 /* manipulado com js add classe flex e width de 100% ao clicar no input para pesquisar  */
 .simple-keyboard{

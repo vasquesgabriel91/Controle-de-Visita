@@ -71,11 +71,11 @@
                                                 <div class="col-sm-10 presenca font-css col-sm-12 ">
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <label for="">Confirmar presença</label>
-                                                        <span class="btn btn-info">
-                                                            <a href="../Controle-de-Visita-FullStack/Toten_Token/DB_Query_Portaria_Toten/portaria.php?id=<?= $consulta['id']?>" class="font-id-css" >
+                                                        <div class="btn btn-info border-0" id="bg-btn">
+                                                            <a href="../Controle-de-Visita-FullStack/Toten_Token/DB_Query_Portaria_Toten/portaria.php?id=<?= $consulta['id']?>" class="text-decoration-none text-white">
                                                                 Confirmar
                                                             </a>    
-                                                        </span>
+                                                        </div>
                                                     </div>
                                                 </div>                     
                                             </td>    

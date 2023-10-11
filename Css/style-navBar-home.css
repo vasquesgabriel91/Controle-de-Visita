@@ -20,11 +20,10 @@ body{
     height: auto;
     background: #00719D;
     padding: 0;
-    
 }
 .sub-menu{
     margin-top: 40%;
-    height: auto;
+    height: 100vh;
     overflow: hidden;
 }
 .icon-home-css{

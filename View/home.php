@@ -8,6 +8,8 @@ $Count_Total->execute();
 $total = $Count_Total->fetchAll(PDO::FETCH_COLUMN);
 
 //Visitas por Data atual 
+$dia_Atual = date('d/m/Y'); // Formato: Mês/Dia/Ano
+
 $hoje = date('Y-m-d'); // Formato: Ano-Mês-Dia
 $visitas_Hoje = $dbDB->prepare("SELECT * FROM Visitante WHERE CONVERT(DATE, periodo_visita_de) = :hoje ORDER BY id DESC");
 $visitas_Hoje->bindValue(':hoje', $hoje, PDO::PARAM_STR);
@@ -30,7 +32,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="card-home-back justify-content-end shadow me-4 hover bg-warning" id="back-yellow">
                 <div class="card-home-front p-3 " id="cursor" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <p class="m-0 text-white titulo-card">Visitas marcada para Hoje: <?php echo $hoje ?> </p>
+                    <p class="m-0 text-white titulo-card">Visitas marcada para Hoje: <?php echo $dia_Atual ?> </p>
                 </div>
             </div>
 

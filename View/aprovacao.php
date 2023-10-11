@@ -74,17 +74,18 @@
             </div>
         </div>
     </form>
-
-    <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
-        <table class="d-flex align-items-center table-css flex-column col-sm-12">
+    <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12 ">
+        <table class="d-flex align-items-center table-css flex-column col-sm-12 ">
+            <thead class="col-sm-11 ">
                 <tr class="d-flex flex-row justify-content-around align-items-center mb-4 font-css font-css-dark">
-                    <th class="">Nome</th>
-                    <th class="">Empresa </th>
-                    <th class="">Area da Visita</th>
-                    <th class="">Data da Visita</th>
-                    <th class="">Aprovar</th>
-                    <th class="">Enviar</th>
+                    <th>Nome</th>
+                    <th>Empresa </th>
+                    <th>Telefone</th>
+                    <th>Data de Visita</th>
+                    <th>Aprovar</th>
+                    <th>Enviar</th>
                 </tr>
+            </thead>
                 <?php 
                     foreach ($resultado as $resultados) { ?>
                         <tr class="listagem-back-blue mb-4">

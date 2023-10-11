@@ -18,7 +18,7 @@ if(isset($_GET['id'])) {
         $verificado = $verdica_Data->fetch(); 
         $periodo_visita_de = $verificado['periodo_visita_de'];
 
-        $_SESSION['deletar_Visitas'] = "Essa visita foi realizada no dia ".$periodo_visita_de.". Deseja excluir?";
+        $_SESSION['deletar_Visitas'] = "Essa visita foi realizada no dia ".date('d/m/Y', strtotime($periodo_visita_de)).". Deseja excluir?";
         $_SESSION['excluir'] = $id; // Armazena o ID a ser excluído na sessão
         header("Location: ../View/home.php"); 
     }else{
