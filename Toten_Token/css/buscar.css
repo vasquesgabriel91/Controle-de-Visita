@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/***********home********* */
+.titulo{
+    font-family: 'Montserrat', sans-serif;
+    color: #2b2b2b;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.listagem-back-blue{
+    display: flex;
+    width: 75vw;
+    height: auto;
+    border-radius: 17px;
+    background: #00B0F2;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+}
+.listagem-front-white{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 74.3vw;
+    height: 9vh;
+    padding: 0% 2% 0% 2%;
+    border-radius: 17px;
+    border: 1px solid #00B0F2;
+    background: #F8F8F8;
+    transition: all .4s;
+    height: 30vh;
+}
+.border-radius-css{
+    border: 1px solid #00B0F2;
+}
+.focus-outline-none-css{
+    outline: none;
+}
+.font-css{
+    color: #2b2b2b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.btn-hidden{
+    display: none;
+    transition: all .7s;
+}
+
+/* manipulado com js add classe flex e width de 100% ao clicar no input para pesquisar  */
+.simple-keyboard{
+    display: none;
+}
+.simple-keyboard-flex{
+    justify-content: center;
+    display: flex;
+}
+.hg-rows {
+    /* Define os estilos padrão da classe .hg-rows */
+    width: auto;
+}
+.simple-keyboard-flex .hg-rows {
+   /* Adiciona estilos específicos quando .simple-keyboard-flex é aplicada */
+    width: 90%;
+}

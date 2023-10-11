@@ -1,0 +1,108 @@
+<?php
+
+include_once('../BD_Conncetion/connection.php'); 
+////////// READ SOLICITACAOINDEX.PHP ///////////////
+
+if(isset($_GET['id'])){
+    $id = (int)$_GET['id'];
+    $read = $dbDB->prepare("SELECT * FROM Visitante WHERE id = :id");
+    $read->bindValue(':id', $id, PDO::PARAM_INT);
+    $read->execute();
+    $resultadoRead = $read->fetch(PDO::FETCH_ASSOC);
+    
+    // Formatar a data de início da visita
+    $periodo_visita_de = date("Y-m-d H:i:s", strtotime($resultadoRead['periodo_visita_de']));
+
+    // Formatar a data de término da visita
+    $periodo_visita_ate = date("Y-m-d H:i:s", strtotime($resultadoRead['periodo_visita_ate']));
+}
+////////// UPDATE aqui faz atualização da solicitação e a exclusão da aprovação assim que editado ///////////////
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+     $id = $_POST['id'];
+    $nome = $_POST["nome"];
+    $rg = $_POST["rg"];
+    $cpf = $_POST["cpf"];
+    $telefone = $_POST["telefone"];
+    $celular = $_POST["celular"];
+    $email = $_POST["email"];
+    $periodo_visita_de = date('Y-m-d H:i:s', strtotime($_POST["periodo_visita_de"]));
+    $periodo_visita_ate = date('Y-m-d H:i:s', strtotime($_POST["periodo_visita_ate"]));
+    $empresa = $_POST["empresa"];
+    $visitante = $_POST["visitante"];
+    $area_da_visita = $_POST["area_da_visita"];
+    $acesso_fabrica = isset($_POST["acesso_fabrica"]) ? true : false;
+    $acesso_estacionamento = isset($_POST["acesso_estacionamento"]) ? true : false;
+    $placa_carro = $_POST["placa_carro"];
+    $modelo_carro = $_POST["modelo_carro"];
+    $observacao = $_POST["observacao"];
+
+    $update = $dbDB->prepare("UPDATE Visitante SET 
+        nome = :nome,
+        rg = :rg,
+        cpf = :cpf,
+        telefone = :telefone,
+        celular = :celular,
+        email = :email,
+        periodo_visita_de = :periodo_visita_de,
+        periodo_visita_ate = :periodo_visita_ate,
+        empresa = :empresa,
+        visitante = :visitante,
+        area_da_visita = :area_da_visita,
+        acesso_fabrica = :acesso_fabrica,
+        acesso_estacionamento = :acesso_estacionamento,
+        placa_carro = :placa_carro,
+        modelo_carro = :modelo_carro,
+        observacao = :observacao
+        WHERE id = :id");
+
+        $update->bindValue(':id', $id, PDO::PARAM_INT);
+        $update->bindValue(':nome', $nome, PDO::PARAM_STR);
+        $update->bindValue(':rg', $rg, PDO::PARAM_STR);
+        $update->bindValue(':cpf', $cpf, PDO::PARAM_STR);
+        $update->bindValue(':telefone', $telefone, PDO::PARAM_STR);
+        $update->bindValue(':celular', $celular, PDO::PARAM_STR);
+        $update->bindValue(':email', $email, PDO::PARAM_STR);
+        $update->bindValue(':periodo_visita_de', $periodo_visita_de, PDO::PARAM_STR);
+        $update->bindValue(':periodo_visita_ate', $periodo_visita_ate, PDO::PARAM_STR);
+        $update->bindValue(':empresa', $empresa, PDO::PARAM_STR);
+        $update->bindValue(':visitante', $visitante, PDO::PARAM_STR);
+        $update->bindValue(':area_da_visita', $area_da_visita, PDO::PARAM_STR);
+        $update->bindValue(':acesso_fabrica', $acesso_fabrica, PDO::PARAM_INT);
+        $update->bindValue(':acesso_estacionamento', $acesso_estacionamento, PDO::PARAM_INT);
+        $update->bindValue(':placa_carro', $placa_carro, PDO::PARAM_STR);
+        $update->bindValue(':modelo_carro', $modelo_carro, PDO::PARAM_STR);
+        $update->bindValue(':observacao', $observacao, PDO::PARAM_STR);
+        if ($update->execute()) {
+
+            // Confere se o id_visitante da tabela aprovação é igual a o id da tabela Visitante e se for true
+            // ele vai deletar da tabela aprovaçao se não ele só vai fazer o update normalmente             
+            $query = $dbDB->prepare("SELECT COUNT(id) FROM aprovacao WHERE id_visitante = :id_visitante");
+            $query->bindValue(':id_visitante', $id, PDO::PARAM_INT);
+            $query->execute();
+            $resultado = $query->fetchColumn();
+
+            if($resultado > 0){
+                    //Deleta o formulario da tabela aprovação assim que edita o mesmo 
+                $atualizando = $dbDB->prepare("DELETE FROM aprovacao WHERE id_visitante = :id_visitante");
+                $atualizando->bindValue(':id_visitante', $id, PDO::PARAM_INT);
+                    if($atualizando ->execute()) {
+                        session_start();
+                        $_SESSION['atualizado_sucesso'] = "Visitantes aprovados, mas que foram editados, precisam ser aprovados novamente.";
+                         header("Location: ../View/home.php");
+                    } else {
+                        echo "Erro ao excluir o registro.";
+                    }     
+            }else{
+                session_start();
+                $_SESSION['atualizado_sucesso'] = "Atualizado com sucesso";
+                header("Location: ../View/home.php");
+
+            }
+              
+        }else {
+
+            echo "Erro na atualização" ;
+        }
+}
+?>
