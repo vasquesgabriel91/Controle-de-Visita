@@ -23,23 +23,26 @@ $token = "";
              header("Location: ../../../Controle-de-Visita-FullStack/index.php");             
         }else{
             if(isset($_POST["token"])){
-                $token = $_POST["token"];
-                $verificarToken = $dbDB->prepare("SELECT COUNT(identificador) AS count  FROM Visitante WHERE identificador = :token");
+
+                    
+                $verificarToken = $dbDB->prepare("SELECT id, identificador FROM Visitante WHERE id = :id_Visitante AND identificador = :token");
+                $verificarToken->bindParam(':id_Visitante', $id_Visitante);
                 $verificarToken->bindParam(':token', $token);
                 $verificarToken->execute();
-                $tokeVerificado = $verificarToken->fetch(PDO::FETCH_ASSOC)['count'];
-            }if($tokeVerificado == true){
-                
-                $confirmar = $dbDB->prepare("INSERT INTO Registro_da_Visita (id_Visitante) VALUES (:id_Visitante)");
-                $confirmar->bindParam(':id_Visitante', $id_Visitante); 
-                $id_confirmar = $confirmar->fetchAll(PDO::FETCH_ASSOC); 
-                $_SESSION['MensagemPortaria'] = "Nossa equipe recebeu sua solicitação e já está indo ao seu encontro";
-                 header("Location: ../../../Controle-de-Visita-FullStack/index.php");   
+                $visitante = $verificarToken->fetch(PDO::FETCH_ASSOC);
 
-            } else{
+                if ($visitante == true) {
+                    // O token é válido e corresponde ao visitante, agora você pode inserir o registro
+                    $confirmar = $dbDB->prepare("INSERT INTO Registro_da_Visita (id_Visitante) VALUES (:id_Visitante)");
+                    $confirmar->bindParam(':id_Visitante', $id_Visitante);
+                    $confirmar->execute();
+
+                   echo $_SESSION['MensagemPortaria'] = "Nossa equipe recebeu sua solicitação e já está indo ao seu encontro";
+                    // header("Location: ../../../Controle-de-Visita-FullStack/index.php");
+                } else{
                 
-                 $_SESSION['visita_confirmada'] = "Você está tentando confirmar uma visita que não é sua ou o token está incorreto";
-                 header("Location: ../../../Controle-de-Visita-FullStack/index.php");   
+                 echo$_SESSION['visita_confirmada'] = "Você está tentando confirmar uma visita que não é sua ou o token está incorreto";
+                //  header("Location: ../../../Controle-de-Visita-FullStack/index.php");   
 
             } if ($confirmar->execute()) { 
 
@@ -80,7 +83,7 @@ $token = "";
             }  
         }
         }
-       
+    }  
    }else{
        echo "Nenhum resultado encontrado.";
    }
