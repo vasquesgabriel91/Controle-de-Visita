@@ -35,12 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const area_da_Visita = document.querySelector("#area_da_visita");
   const area_visita = document.querySelector("#area_visita");
 
-  const estacionamento = document.querySelector("#acesso_estacionamento");
-  const label_carro= document.querySelector("#label_carro");
-  const placa = document.querySelector("#placa_carro");
-  const label_modelo = document.querySelector("#label-modelo");
-  const carro = document.querySelector("#modelo_carro");
-
   fabrica.addEventListener('change', () => {
 
       const isChecked = fabrica.checked;
@@ -50,23 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   });
 
-  estacionamento.addEventListener('change', () => {
-
-    const isChecked2 = estacionamento.checked;
-    label_carro.classList.toggle("display-flex", isChecked2);
-    placa.classList.toggle("display-flex", isChecked2);
-    label_modelo.classList.toggle("display-flex", isChecked2);
-    carro.classList.toggle("display-flex", isChecked2);
-    placa.value = '';
-    carro.value = '';
-    
   });
-
-});
-
-
-
-
 
 
 

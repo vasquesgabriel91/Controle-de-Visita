@@ -22,19 +22,3 @@ function onKeyPress(button) {
   console.log("Button pressed", button);
 }
 
-
-//Botão confirmar presença da visita 
-
-const chekbox = document.querySelector("#Confirmar") ;
-const submit_enviar = document.querySelector(".btn-visible") ;
-
-chekbox.addEventListener("change", function(){
-  if(chekbox.checked){
-    submit_enviar.classList.remove("btn-hidden");
-  }else{
-    submit_enviar.classList.add("btn-hidden");
-
-  }
-});
-
-

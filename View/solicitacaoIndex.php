@@ -28,12 +28,6 @@
                             <label class="label-css" for="nome">Nome:</label>
                             <input type="text" id="nome" class="input-css" name="nome" value="<?= $resultadoRead['nome']; ?>" >
 
-                            <label  class="label-css" for="rg">RG:</label>
-                            <input type="text" id="rg" class="input-css" name="rg" value="<?= $resultadoRead['rg']; ?>">
-
-                            <label  class="label-css" for="cpf">CPF:</label>
-                            <input type="text" id="cpf" class="input-css"name="cpf" value="<?= $resultadoRead['cpf']; ?>">
-
                             <label  class="label-css" for="telefone">Telefone:</label>
                             <input type="text" id="telefone" class="input-css" name="telefone" value="<?= $resultadoRead['telefone']; ?>">
 
@@ -56,26 +50,27 @@
 
                         <label  class="label-css" for="visitante">Visitante:</label>
                         <input type="text" id="visitante" class="input-css" name="visitante"  value="<?= $resultadoRead['visitante']; ?>">
-
-                        <label  class="label-css" for="area_da_visita">Área da Visita:</label>
-                        <input type="text" id="area_da_visita" class="input-css" name="area_da_visita"  value="<?= $resultadoRead['area_da_visita']; ?>">
-
-                        <label  class="label-css" for="placa_carro">Placa do Carro:</label>
-                        <input type="text" id="placa_carro" class="input-css" name="placa_carro" value="<?= $resultadoRead['placa_carro']; ?>">
-
-                        <label  class="label-css" for="modelo_carro">Modelo do Carro:</label>
-                        <input type="text" id="modelo_carro" class="input-css" name="modelo_carro" value="<?= $resultadoRead['modelo_carro']; ?>">
                             
                         <input type="hidden" id="identificador" class="input-css" name="identificador">
 
                         <label for="observacao"class="label-css">Observação:</label>
                         <textarea id="observacao" class="input-textarea-css mb-1" name="observacao"><?= $resultadoRead['observacao']; ?></textarea>
+
+                        <select  name="motivo_visita" id="motivo_visita">
+                            <option><?= $resultadoRead['motivo_visita']; ?></option>
+                            <option value="Visita">Visita</option>
+                            <option value="Entrevista">Entrevista</option>
+                            <option value="Prestador de serviço">Prestador de serviço</option>
+                        </select>
                             
-                        <div class="d-flex flex-column justify-content-around acesso-css">
+                        <div class="d-flex flex-column justify-content-around acesso-css mt-3">
                             <div class="d-flex align-items-center">
                                 <label class="pe-2 label-acesso-css" for="acesso_fabrica">Acesso à Fábrica:</label>
                                 <input type="checkbox" id="acesso_fabrica" class="inputBox-css" name="acesso_fabrica" <?= $resultadoRead['acesso_fabrica'] ? 'checked' : ''; ?>>
                             </div>
+
+                            <label  class="label-css" for="area_da_visita">Área da Visita:</label>
+                            <input type="text" id="area_da_visita" class="input-css mb-2" name="area_da_visita"  value="<?= $resultadoRead['area_da_visita']; ?>">
 
                             <div class="d-flex align-items-center">
                                 <label class="pe-2 label-acesso-css" for="acesso_estacionamento">Acesso ao Estacionamento:</label>

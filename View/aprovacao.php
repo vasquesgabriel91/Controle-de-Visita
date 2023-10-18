@@ -80,7 +80,7 @@
                 <tr class="d-flex flex-row justify-content-around align-items-center mb-4 font-css font-css-dark">
                     <th>Nome</th>
                     <th>Empresa </th>
-                    <th>Telefone</th>
+                    <th>Area da Visita</th>
                     <th>Data de Visita</th>
                     <th>Aprovar</th>
                     <th>Enviar</th>
@@ -90,10 +90,10 @@
                     foreach ($resultado as $resultados) { ?>
                         <tr class="listagem-back-blue mb-4">
                             <td class="listagem-front-white font-css">
-                                <span class=""><a href="solicitacaoIndex.php?>" class="font-id-css"><?= $resultados['nome']?></a> </span>
+                                <span class=""><a href="solicitacaoIndex.php?id=<?= $resultados['id']?>" class="font-id-css"><?= $resultados['nome']?></a></span>
                                 <span><?= $resultados['empresa']; ?></span>
                                 <span><?= $resultados['area_da_visita']; ?></span>
-                                <span><?= $resultados['periodo_visita_de']; ?></span>
+                                <span><?=date('d/m/Y - H:i', strtotime($resultados['periodo_visita_de']))?></span>
 
                                 <form action="../DB_Querys/aprovacao.php" method="POST" class="d-flex col-sm-3 justify-content-between">
                                     <input type="hidden" name="id_visitante" value="<?= $resultados['id']; ?>">
@@ -184,7 +184,7 @@
                                                     <span ><?= $querys['nome']; ?></span>
                                                     <span ><?= $querys['empresa']; ?></span>
                                                     <span ><?= $querys ['area_da_visita']; ?></span>
-                                                    <span ><?= $querys['periodo_visita_de']; ?></span>
+                                                    <span><?=date('d/m/Y - H:i', strtotime($querys['periodo_visita_de']))?></span>
                                                     <span  class="d-flex align-items-center justify-content-center" id="aprovado" name="aprovado">Aprovado</span>
                                             </td>
                                             </tr>

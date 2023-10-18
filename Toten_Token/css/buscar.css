@@ -12,25 +12,29 @@
 .listagem-back-blue{
     display: flex;
     width: 75vw;
-    height: auto;
+    height: 9vh;
     border-radius: 17px;
     background: #00B0F2;
     justify-content: flex-end;
     align-items: center;
     overflow: hidden;
 }
+
 .listagem-front-white{
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 74.3vw;
     height: 9vh;
     padding: 0% 2% 0% 2%;
     border-radius: 17px;
     border: 1px solid #00B0F2;
     background: #F8F8F8;
-    transition: all .4s;
-    height: 30vh;
+    cursor: pointer;
+}
+
+.listagem-front-white a:hover{
+    color: inherit;
 }
 .border-radius-css{
     border: 1px solid #00B0F2;
@@ -46,15 +50,18 @@
     font-weight: 500;
     line-height: normal;
 }
-
-.btn-hidden{
-    display: none;
-    transition: all .7s;
+.color-paginacao{
+    color: #2b2b2b;
 }
-#bg-btn{
-    background-color: #003F56;
+.circle-css{
+    width: 22px;
+    height: 22px;
+    border-radius: 50px;
+    background-color: #001821;
+    color: #f5f5f5;
+    margin-left: 1%;
+    margin-right: 1%;
 }
-
 /* manipulado com js add classe flex e width de 100% ao clicar no input para pesquisar  */
 .simple-keyboard{
     display: none;
@@ -70,4 +77,21 @@
 .simple-keyboard-flex .hg-rows {
    /* Adiciona estilos específicos quando .simple-keyboard-flex é aplicada */
     width: 90%;
+}
+
+/* MODAL */
+
+.modal {
+    backdrop-filter: blur(0.4em);
+
+}
+.modal-dialog-css{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fafafa;
+    border-radius: 1em;
+    padding: 2em;
+    min-width: 60%;
 }

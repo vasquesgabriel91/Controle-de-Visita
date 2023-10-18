@@ -73,3 +73,8 @@
     cursor: pointer;
 
 }
+#motivo_visita{
+    border-radius: 0.5rem;
+    margin-top: 3vh;
+    padding: 3%;
+}

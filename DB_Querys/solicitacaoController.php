@@ -6,27 +6,22 @@ include_once('../BD_Conncetion/connection.php');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nome = $_POST["nome"];
-    $rg = $_POST["rg"];
-    $cpf = $_POST["cpf"];
     $telefone = $_POST["telefone"];
     $celular = $_POST["celular"];
     $email = $_POST["email"];
-    $periodo_visita_de = date('Y-m-d H:i:s', strtotime($_POST["periodo_visita_de"]));
-    $periodo_visita_ate = date('Y-m-d H:i:s', strtotime($_POST["periodo_visita_ate"]));
+    $periodo_visita_de = date('Y-m-d H:i', strtotime($_POST["periodo_visita_de"]));
+    $periodo_visita_ate = date('Y-m-d H:i', strtotime($_POST["periodo_visita_ate"]));
     $empresa = $_POST["empresa"];
     $visitante = $_POST["visitante"];
     $area_da_visita = $_POST["area_da_visita"];
     $acesso_fabrica = isset($_POST["acesso_fabrica"]) ? true : false;
     $acesso_estacionamento = isset($_POST["acesso_estacionamento"]) ? true : false;
-    $placa_carro = $_POST["placa_carro"];
-    $modelo_carro = $_POST["modelo_carro"];
     $observacao = $_POST["observacao"];
+    $motivo_visita = $_POST["motivo_visita"];
     $identificador = rand(1,1000);
 
     $inserir = $dbDB->prepare("INSERT INTO Visitante (
         nome,
-        rg,
-        cpf,
         telefone,
         celular,
         email,
@@ -37,14 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         area_da_visita,
         acesso_fabrica,
         acesso_estacionamento,
-        placa_carro,
-        modelo_carro,
         observacao,
+        motivo_visita,
         identificador
         ) VALUES (
             :nome,
-            :rg,
-            :cpf,
             :telefone,
             :celular,
             :email,
@@ -55,14 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             :area_da_visita,
             :acesso_fabrica,
             :acesso_estacionamento,
-            :placa_carro,
-            :modelo_carro,
             :observacao,
+            :motivo_visita,
             :identificador)"
             );
-            $inserir->bindParam(':nome', $nome);
-            $inserir->bindParam(':rg', $rg);
-            $inserir->bindParam(':cpf', $cpf);
+            $inserir->bindParam(':nome', $nome);    
             $inserir->bindParam(':telefone',  $telefone);
             $inserir->bindParam(':celular', $celular);
             $inserir->bindParam(':email', $email);
@@ -73,11 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $inserir->bindParam(':area_da_visita', $area_da_visita);
             $inserir->bindParam(':acesso_fabrica', $acesso_fabrica );
             $inserir->bindParam(':acesso_estacionamento', $acesso_estacionamento);
-            $inserir->bindParam(':placa_carro', $placa_carro);
-            $inserir->bindParam(':modelo_carro', $modelo_carro);
             $inserir->bindParam(':observacao', $observacao);
+            $inserir->bindParam(':motivo_visita', $motivo_visita);
             $inserir->bindParam(':identificador',$identificador);
-
             if($inserir->execute()){
                 // Consulta para obter o número de celular do último usuário
                 

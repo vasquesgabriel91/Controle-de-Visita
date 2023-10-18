@@ -6,8 +6,9 @@ include_once('../../BD_Conncetion/connection.php');
 
 $confirmacao = "";
 $id_Visitante = "";
-// if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    
+$token = "";
+
+
     if(isset($_GET['id'])){
 
         $id_Visitante = $_GET['id'];
@@ -21,19 +22,35 @@ $id_Visitante = "";
              $_SESSION['visita_confirmada'] = "Estamos a caminho para ajudá-lo, aguarde um momento";
              header("Location: ../../../Controle-de-Visita-FullStack/index.php");             
         }else{
-            $confirmar = $dbDB->prepare("INSERT INTO Registro_da_Visita (id_Visitante) VALUES (:id_Visitante)");
-            $confirmar->bindParam(':id_Visitante', $id_Visitante); 
-            $id_confirmar = $confirmar->fetchAll(PDO::FETCH_ASSOC); 
+            if(isset($_POST["token"])){
 
-            $_SESSION['MensagemPortaria'] = "Nossa equipe recebeu sua solicitação e já está indo ao seu encontro";
+                 $token = $_POST["token"];
+                $verificarToken = $dbDB->prepare("SELECT COUNT(identificador) AS count  FROM Visitante WHERE identificador = :token");
+                $verificarToken->bindParam(':token', $token);
+                $verificarToken->execute();
+                $tokeVerificado = $verificarToken->fetch(PDO::FETCH_ASSOC)['count'];
 
-        } if ($confirmar->execute()) { 
+            }if($tokeVerificado == true){
+                
+                    $confirmar = $dbDB->prepare("INSERT INTO Registro_da_Visita (id_Visitante) VALUES (:id_Visitante)");
+                    $confirmar->bindParam(':id_Visitante', $id_Visitante); 
+                    $id_confirmar = $confirmar->fetchAll(PDO::FETCH_ASSOC); 
+                     $_SESSION['MensagemPortaria'] = "Nossa equipe recebeu sua solicitação e já está indo ao seu encontro";
+                     header("Location: ../../../Controle-de-Visita-FullStack/index.php");   
+
+            } else{
+                
+                 $_SESSION['visita_confirmada'] = "Você está tentando confirmar uma visita que não é sua ou o token está incorreto";
+                 header("Location: ../../../Controle-de-Visita-FullStack/index.php");   
+
+            } if ($confirmar->execute()) { 
 
                 $usuarios_com_acesso = $dbDB->prepare("SELECT * FROM usuarios INNER JOIN Cargos 
                 ON usuarios.cargoid = Cargos.id WHERE Cargos.id IN (1, 2)");
                 $usuarios_com_acesso->execute();
                 $usuario = $usuarios_com_acesso->fetchAll(PDO::FETCH_ASSOC);
                 if($usuario){
+
                     // foreach($usuario as $usuarios){
 
                     //     $nome = $usuarios['nome'];
@@ -58,15 +75,17 @@ $id_Visitante = "";
                     //     echo $response->getBody();
                     //   }
 
-                    header("Location: ../../../Controle-de-Visita-FullStack/index.php");             
+                    // header("Location: ../../../Controle-de-Visita-FullStack/index.php");    
+
             }else{
                 echo "não foi possível mandar mensagem, tente novamente mais tarde";
             }  
         }
+        }
+       
    }else{
        echo "Nenhum resultado encontrado.";
    }
-// }
 
 ?>
 

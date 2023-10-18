@@ -11,36 +11,31 @@ if(isset($_GET['id'])){
     $resultadoRead = $read->fetch(PDO::FETCH_ASSOC);
     
     // Formatar a data de início da visita
-    $periodo_visita_de = date("Y-m-d H:i:s", strtotime($resultadoRead['periodo_visita_de']));
+    $periodo_visita_de = date("Y-m-d H:i", strtotime($resultadoRead['periodo_visita_de']));
 
     // Formatar a data de término da visita
-    $periodo_visita_ate = date("Y-m-d H:i:s", strtotime($resultadoRead['periodo_visita_ate']));
+    $periodo_visita_ate = date("Y-m-d H:i", strtotime($resultadoRead['periodo_visita_ate']));
 }
-////////// UPDATE aqui faz atualização da solicitação e a exclusão da aprovação assim que editado ///////////////
 
+////////// UPDATE aqui faz atualização da solicitação e a exclusão da aprovação assim que editado ///////////////
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
      $id = $_POST['id'];
     $nome = $_POST["nome"];
-    $rg = $_POST["rg"];
-    $cpf = $_POST["cpf"];
     $telefone = $_POST["telefone"];
     $celular = $_POST["celular"];
     $email = $_POST["email"];
-    $periodo_visita_de = date('Y-m-d H:i:s', strtotime($_POST["periodo_visita_de"]));
-    $periodo_visita_ate = date('Y-m-d H:i:s', strtotime($_POST["periodo_visita_ate"]));
+    $periodo_visita_de = date('Y-m-d H:i', strtotime($_POST["periodo_visita_de"]));
+    $periodo_visita_ate = date('Y-m-d H:i', strtotime($_POST["periodo_visita_ate"]));
     $empresa = $_POST["empresa"];
     $visitante = $_POST["visitante"];
     $area_da_visita = $_POST["area_da_visita"];
     $acesso_fabrica = isset($_POST["acesso_fabrica"]) ? true : false;
     $acesso_estacionamento = isset($_POST["acesso_estacionamento"]) ? true : false;
-    $placa_carro = $_POST["placa_carro"];
-    $modelo_carro = $_POST["modelo_carro"];
     $observacao = $_POST["observacao"];
+    $motivo_visita = $_POST["motivo_visita"];
 
     $update = $dbDB->prepare("UPDATE Visitante SET 
         nome = :nome,
-        rg = :rg,
-        cpf = :cpf,
         telefone = :telefone,
         celular = :celular,
         email = :email,
@@ -51,15 +46,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         area_da_visita = :area_da_visita,
         acesso_fabrica = :acesso_fabrica,
         acesso_estacionamento = :acesso_estacionamento,
-        placa_carro = :placa_carro,
-        modelo_carro = :modelo_carro,
-        observacao = :observacao
+        observacao = :observacao,
+        motivo_visita = :motivo_visita
         WHERE id = :id");
 
         $update->bindValue(':id', $id, PDO::PARAM_INT);
         $update->bindValue(':nome', $nome, PDO::PARAM_STR);
-        $update->bindValue(':rg', $rg, PDO::PARAM_STR);
-        $update->bindValue(':cpf', $cpf, PDO::PARAM_STR);
         $update->bindValue(':telefone', $telefone, PDO::PARAM_STR);
         $update->bindValue(':celular', $celular, PDO::PARAM_STR);
         $update->bindValue(':email', $email, PDO::PARAM_STR);
@@ -70,9 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $update->bindValue(':area_da_visita', $area_da_visita, PDO::PARAM_STR);
         $update->bindValue(':acesso_fabrica', $acesso_fabrica, PDO::PARAM_INT);
         $update->bindValue(':acesso_estacionamento', $acesso_estacionamento, PDO::PARAM_INT);
-        $update->bindValue(':placa_carro', $placa_carro, PDO::PARAM_STR);
-        $update->bindValue(':modelo_carro', $modelo_carro, PDO::PARAM_STR);
         $update->bindValue(':observacao', $observacao, PDO::PARAM_STR);
+        $update->bindParam(':motivo_visita', $motivo_visita, PDO::PARAM_STR);
         if ($update->execute()) {
 
             // Confere se o id_visitante da tabela aprovação é igual a o id da tabela Visitante e se for true

@@ -20,12 +20,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <label class="label-css" for="nome">Responsável pela visita:</label>
                         <input type="text" id="nome" class="input-css" name="nome" required>
 
-                        <label  class="label-css" for="rg">RG:</label>
-                        <input type="text" id="rg" class="input-css" name="rg">
-
-                        <label  class="label-css" for="cpf">CPF:</label>
-                        <input type="text" id="cpf" class="input-css"name="cpf">
-
                         <label  class="label-css" for="telefone">Telefone:</label>
                         <input type="text" id="telefone" class="input-css" name="telefone">
 
@@ -54,8 +48,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                         <label for="observacao"class="label-css">Objetivo da visita:</label>
                         <textarea id="observacao" class="input-textarea-css mb-1" name="observacao"></textarea>
-                        
 
+                        <select  name="motivo_visita" id="motivo_visita" >
+                            <option  selected disabled>Selecione o motivo da visita</option>
+                            <option value="Visita">Visita</option>
+                            <option value="Entrevista">Entrevista</option>
+                            <option value="Prestador de serviço">Prestador de serviço</option>
+                        </select>
+                        
                         <div class="d-flex align-items-center mt-2">
                             <label class="pe-2  label-acesso-css" for="acesso_fabrica">Acesso à Fábrica:</label>
                             <input type="checkbox" id="acesso_fabrica" class="inputBox-css " name="acesso_fabrica">
@@ -69,11 +69,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <input type="checkbox" id="acesso_estacionamento" class="inputBox-css " name="acesso_estacionamento">
                         </div>
 
-                        <label  class="label-css display-none" id="label_carro" for="placa_carro">Placa do Carro:</label>
-                        <input type="text" id="placa_carro" class="input-css display-none" name="placa_carro" title="Informe a placa no formato XXX-0000">
-
-                        <label  class="label-css display-none" id="label-modelo" for="modelo_carro">Modelo do Carro:</label>
-                        <input type="text" id="modelo_carro" class="input-css display-none" name="modelo_carro">
                     </div>
                 </div>  
                    

@@ -99,7 +99,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
                                         <span><?= $resultados['empresa']; ?></span>
                                         <span><?= $resultados['celular']; ?></span>
                                         <span> <?= $resultados['area_da_visita']; ?></span>
-                                        <span><?= $resultados['periodo_visita_de']; ?></span>
+                                        <span><?=date('d/m/Y - H:i', strtotime($resultados['periodo_visita_de']))?></span>
                                     </div>
                                 <?php
                                 }
@@ -126,15 +126,15 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
                 <?php } ?>  
         </table>
 
-        <div class="d-flex col-sm-12 justify-content-center mb-4">
+        <div class="d-flex col-sm-12 justify-content-center align-items-center mb-4 ">
             <div class="d-flex flex-row justify-content-end col-sm-9 align-items-center">
                 <a href="?paginaAtual=1" class="me-2 text-decoration-none  color-paginacao">Primeira</a>
                 <?php if($paginaAtual>1):?>
-                    <a href="?paginaAtual=<?=$paginaAtual-1 ?>"> 
+                    <a href="?paginaAtual=<?=$paginaAtual-1 ?>" class="d-flex justify-content-center align-items-center"> 
                 <?php endif;?>       
                         <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
                             <path d="M10 1L2 5.76191L10 11" stroke="#004159" stroke-width="2" stroke-linecap="round"/>
-                        </svg> 
+                        </svg>
                     </a>
 
                 <div class="d-flex align-items-center justify-content-center circle-css">
@@ -142,14 +142,15 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <?php if($paginaAtual<$paginas):?>
-                    <a href="?paginaAtual=<?=$paginaAtual+1 ?>" > 
+                    <a href="?paginaAtual=<?=$paginaAtual+1 ?>" class="d-flex justify-content-center align-items-center"> 
                 <?php endif;?>
                 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
-                        <path d="M1 11L9 6.23809L1 1" stroke="#004159" stroke-width="2" stroke-linecap="round"/>
-                    </svg> 
-                </a>
-                <a href="?paginaAtual=<?=$paginas?>" class="ms-2 text-decoration-none  color-paginacao">Ultima</a>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
+                            <path d="M1 11L9 6.23809L1 1" stroke="#004159" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+
+                    </a>
+                <a href="?paginaAtual=<?=$paginas?>" class="ms-2 text-decoration-none color-paginacao">Ultima</a>
             </div>
         </div>
     </div>
@@ -292,8 +293,8 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
     }
 ?>
 
-<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-css modal-dialog-css-success border-warning" id="modal-warning">
+    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-css modal-dialog-css-success border-warning p-3" id="modal-warning">
             <div class="d-flex flex-row justify-content-end col-sm-12">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -322,7 +323,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
                                                 <span class=""><a href="solicitacaoIndex.php?id=<?= $Hoje['id']?>" class="font-id-css"><?= $Hoje['nome']?></a> </span>
                                                 <span><?= $Hoje['empresa']; ?></span>
                                                 <span><?= $Hoje ['area_da_visita']; ?></span>
-                                                <span><?= $Hoje['periodo_visita_de']; ?></span>
+                                                <span><?=date('d/m/Y - H:i', strtotime($Hoje['periodo_visita_de']))?></span>
                                             </td>
                                         </tr>
                                      </tbody>
