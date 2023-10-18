@@ -23,20 +23,18 @@ $token = "";
              header("Location: ../../../Controle-de-Visita-FullStack/index.php");             
         }else{
             if(isset($_POST["token"])){
-
-                 $token = $_POST["token"];
+                $token = $_POST["token"];
                 $verificarToken = $dbDB->prepare("SELECT COUNT(identificador) AS count  FROM Visitante WHERE identificador = :token");
                 $verificarToken->bindParam(':token', $token);
                 $verificarToken->execute();
                 $tokeVerificado = $verificarToken->fetch(PDO::FETCH_ASSOC)['count'];
-
             }if($tokeVerificado == true){
                 
-                    $confirmar = $dbDB->prepare("INSERT INTO Registro_da_Visita (id_Visitante) VALUES (:id_Visitante)");
-                    $confirmar->bindParam(':id_Visitante', $id_Visitante); 
-                    $id_confirmar = $confirmar->fetchAll(PDO::FETCH_ASSOC); 
-                     $_SESSION['MensagemPortaria'] = "Nossa equipe recebeu sua solicitação e já está indo ao seu encontro";
-                     header("Location: ../../../Controle-de-Visita-FullStack/index.php");   
+                $confirmar = $dbDB->prepare("INSERT INTO Registro_da_Visita (id_Visitante) VALUES (:id_Visitante)");
+                $confirmar->bindParam(':id_Visitante', $id_Visitante); 
+                $id_confirmar = $confirmar->fetchAll(PDO::FETCH_ASSOC); 
+                $_SESSION['MensagemPortaria'] = "Nossa equipe recebeu sua solicitação e já está indo ao seu encontro";
+                 header("Location: ../../../Controle-de-Visita-FullStack/index.php");   
 
             } else{
                 

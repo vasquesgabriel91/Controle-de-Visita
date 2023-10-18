@@ -18,16 +18,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <div class="d-flex flex-row justify-content-around">
                     <div class="d-flex flex-column col-sm-5 ">
                         <label class="label-css" for="nome">Responsável pela visita:</label>
-                        <input type="text" id="nome" class="input-css" name="nome" required>
+                        <input type="text" id="nome" class="input-css" placeholder="Nome" name="nome" required>
 
                         <label  class="label-css" for="telefone">Telefone:</label>
-                        <input type="text" id="telefone" class="input-css" name="telefone">
+                        <input type="text" id="telefone" class="input-css" name="telefone" placeholder="telefone">
 
                         <label  class="label-css" for="celular">Celular:</label>
-                        <input type="text" id="celular" class="input-css" name="celular" required>
+                        <input type="text" id="celular" class="input-css" name="celular" required placeholder="celular">
 
                         <label  class="label-css" for="email">Email:</label>
-                        <input type="email" id="email" class="input-css" name="email">
+                        <input type="email" id="email" class="input-css" name="email" placeholder="email">
 
                         <label  class="label-css" for="periodo_visita_de">Período de Visita (de):</label>
                         <input type="datetime-local" id="periodo_visita_de" class="input-css" name="periodo_visita_de">
@@ -39,10 +39,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <div class="d-flex flex-column col-sm-5">
 
                         <label  class="label-css" for="visitante">Nome do Visitante:</label>
-                        <input type="text" id="visitante" class="input-css" name="visitante" required>
+                        <input type="text" placeholder="Nome completo" id="visitante" class="input-css" name="visitante" required>
 
                         <label  class="label-css" for="empresa">Empresa:</label>
-                        <input type="text" id="empresa" class="input-css" name="empresa">
+                        <input type="text" id="empresa" class="input-css" name="empresa" placeholder="Nome">
                         
                         <input type="hidden" id="identificador" class="input-css" name="identificador">
 

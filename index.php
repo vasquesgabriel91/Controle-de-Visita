@@ -61,10 +61,10 @@
         </div> 
 
         <div class="d-flex flex-column align-items-center mt-5">
-            <span class="titulo"> Procurar seu agendamento</span>
+            <span class="titulo"> Procure seu agendamento</span>
             <form action="" method="GET" class="col-sm-8 mt-5">
                 <div class="d-flex align-items-center justify-content-between rounded-pill col-sm-12 bg-light border-radius-css">
-                    <input type="text" autocomplete="off"  placeholder="Pesquisar" id="pesquisar" name="token_ou_name" class="input rounded-pill border-0 p-1 me-2 bg-light col-sm-10 focus-outline-none-css" >
+                    <input type="text" autocomplete="off"  placeholder="Digite seu Token ou Nome completo" id="pesquisar" name="token_ou_name" class="input rounded-pill border-0 p-1 me-2 bg-light col-sm-10 focus-outline-none-css" >
                     <button type="submit" class="border-0 bg-transparent d-flex flex-row align-items-center justify-content-end col-sm-1 me-3 rounded-pill">
                         <i class="fa-solid fa-magnifying-glass me-3" style="color: #00b0f2;"> </i>
                         <span class="font-css">PESQUISAR</span>
@@ -116,7 +116,7 @@
                                                     <span class="titulo"> Digite seu Token de confirmação</span>
                                                     <form action=" ../Controle-de-Visita-FullStack/Toten_Token/DB_Query_Portaria_Toten/portaria.php?id=<?= $resultados['id']?>" method="POST" class="col-sm-11 mt-5">
                                                         <div class="d-flex align-items-center justify-content-between rounded-pill col-sm-12 border-radius-css">
-                                                            <input type="text" autocomplete="off"  placeholder="Digite seu Token ou Nome completo" id="pesquisar" name="token" class="input rounded-pill border-0 p-1 me-2 bg-light col-sm-10 focus-outline-none-css" >
+                                                            <input type="text" autocomplete="off"  placeholder="Digite seu Token" id="pesquisar" name="token" class="input rounded-pill border-0 p-1 me-2 bg-light col-sm-10 focus-outline-none-css" >
                                                             <button type="submit" class="border-0 bg-transparent d-flex flex-row align-items-center justify-content-end col-sm-1 me-3 rounded-pill">
                                                                 <i class="fa-solid fa-magnifying-glass me-3" style="color: #00b0f2;"> </i>
                                                                 <span class="font-css">PESQUISAR</span>
@@ -177,21 +177,27 @@
         <div class="flash-message-child p-4">
             <i class="fa-solid fa-circle-exclamation fa-shake" style="color: #fb1313; font-size: 5rem;"></i>
             <div class="d-flex flex-column justify-content-between align-items-center mt-4">
+
                 <?php
                 if ($_SESSION['visita_confirmada'] == "Você está tentando confirmar uma visita que não é sua ou o token está incorreto") {
                 ?>
+
                 <p class="font-flash-message" id="font-flash-message">
                     Algo deu errado
                 </p>
+
                 <?php
                 } else {
                 ?>
+
                 <p class="font-flash-message" id="font-flash-message">
                     Já confirmamos sua visita.
                 </p>
+
                 <?php
                 }
                 ?>
+
                 <span class="font-css" id="">
                     <?php
                     echo $_SESSION['visita_confirmada'];
