@@ -1,9 +1,13 @@
-<?php require_once 'Side_Bar_home.php';
+<?php 
+    require_once 'Side_Bar_home.php';
+    include_once('../BD_Conncetion/connection.php'); 
+    require_once('../DB_Querys/solicitacao_entrevista.php');
+    $dados = readSolicitacaoEntrevista($dbDB);
 
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: ../View/login.php");
-    exit;   
-}
+    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+        header("location: ../View/login.php");
+        exit;   
+    }
 ?>
 
 <div class="col d-flex justify-content-center">
@@ -52,7 +56,33 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     </div>
             </form>
         </div>
+        <div class="d-inline-flex gap-1 mt-5">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Button with data-bs-target
+            </button>
+        </div>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <!-- Adicione outras colunas da tabela aqui -->
+                </tr>
+                <?php foreach ($dados as $registro) { ?>
+                <tr>
+                    <td><?php echo $registro['id']; ?></td>
+                    <td><?php echo $registro['nome']; ?></td>
+                    <td><?php echo $registro['email']; ?></td>
+                    <!-- Adicione outras colunas da tabela aqui -->
+                </tr>
+                <?php } ?>
+            </table>
+            </div>
+        </div>
     </div>
+    
     <script src="../Js/main.js" crossorigin="anonymous"></script>
 
 </div>
