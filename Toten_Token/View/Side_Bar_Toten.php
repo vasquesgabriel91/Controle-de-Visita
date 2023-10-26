@@ -9,9 +9,12 @@
         <link rel="stylesheet" href="../../../Controle-de-Visita-FullStack/Toten_Token/css/buscar.css">
         <link rel="stylesheet" href="../../../Controle-de-Visita-FullStack/Toten_Token/css/confirmacao.css">
         <link rel="stylesheet" href="../../../Controle-de-Visita-FullStack/Css/flash-message.css">
+        <link rel="icon" type="image/x-icon" href="../../../Controle-de-Visita-FullStack/Img/Logo_P.ico" >
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
         <title>Home</title>
     </head>
 
@@ -33,16 +36,6 @@
                 </a>
             
 
-                <!-- <a href="../../../Controle-de-Visita-FullStack/Toten_Token/View/confirmacao.php" class="text-decoration-none">
-                    <div class="icon-home-css">
-                        <span id="icon-text-home" class="m-0" for="mudar-thema">
-                            <div class="col-sm-4  d-flex flex-row justify-content-center align-items-center">
-                                <i class="fa-regular fa-circle-check" style="color: #fcfcfc;"></i>
-                            </div>
-                            <p class="m-0 "><span>Confirmação</span></p>
-                        </span>
-                    </div>
-                </a>            -->
             </div>
         </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

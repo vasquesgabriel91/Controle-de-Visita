@@ -29,16 +29,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <label  class="label-css" for="email">Email:</label>
                         <input type="email" id="email" class="input-css" name="email" placeholder="email">
 
-                        <label  class="label-css" for="periodo_visita_de">Período de Visita (de):</label>
+                        <label  class="label-css" for="periodo_visita_de">Período de visita (de):</label>
                         <input type="datetime-local" id="periodo_visita_de" class="input-css" name="periodo_visita_de">
 
-                        <label  class="label-css" for="periodo_visita_ate">Período de Visita (até):</label>
+                        <label  class="label-css" for="periodo_visita_ate">Período de visita (até):</label>
                         <input type="datetime-local" id="periodo_visita_ate" class="input-css" name="periodo_visita_ate">
                     </div>
 
                     <div class="d-flex flex-column col-sm-5">
 
-                        <label  class="label-css" for="visitante">Nome do Visitante:</label>
+                        <label  class="label-css" for="visitante">Nome do visitante:</label>
                         <input type="text" placeholder="Nome completo" id="visitante" class="input-css" name="visitante" required>
 
                         <label  class="label-css" for="empresa">Empresa:</label>

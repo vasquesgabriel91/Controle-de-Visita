@@ -66,6 +66,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $inserir->bindParam(':motivo_visita', $motivo_visita);
             $inserir->bindParam(':identificador',$identificador);
             if($inserir->execute()){
+                
+                $_SESSION['sucesso'] = "Visita foi criada com sucesso";
+                header("Location: ../View/solicitacao.php"); 
+           
+                $id = $dbDB->lastInsertId();
+                $consulta = $dbDB->prepare("SELECT acesso_fabrica FROM Visitante WHERE id = :visitante_id");
+                $consulta->bindParam(':visitante_id', $id);
+                $consulta->execute();
+                $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+
+                if ($resultado && $resultado['acesso_fabrica'] == 0) {
+                        $id_usuario = $_SESSION["id"];
+                        $id = $dbDB->lastInsertId();
+                        $insertInto = $dbDB->prepare("INSERT INTO aprovacao (id_visitante, id_usuario, aprovado_reprovado) VALUES (:resultados, :id_usuario, 'on' )");
+                        $insertInto->bindParam(':id_usuario', $id_usuario);
+                        $insertInto->bindParam(':resultados', $id);
+                        $insertInto->execute();
+
+                        $_SESSION['sucesso'] = "Visita foi criada e aprovada com sucesso";
+                        header("Location: ../View/solicitacao.php"); 
+                    }else{
+                     echo "Erro para aprovação";
+                    }
+
                 // Consulta para obter o número de celular do último usuário
                 
                 //     $ultimoID = $dbDB->lastInsertId();
@@ -83,10 +107,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 
                 //      $mensage = 'Olá, '.$nome_Auth.' Informo que a empresa ' .$nome_Empresa. ' visitará a Paranoá no dia '.$data.'';
     
-                    $_SESSION['sucesso'] = "Visita foi criada com sucesso";
-                    header("Location: ../View/solicitacao.php"); 
+                 
                 
-                }
+            }
 }
 
 

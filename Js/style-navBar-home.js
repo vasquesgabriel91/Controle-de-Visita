@@ -42,9 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
       area_da_Visita.classList.toggle("display-flex", isChecked);
       area_da_Visita.value = '';
 
-  });
-
-  });
-
+    });
+});
 
 
+  

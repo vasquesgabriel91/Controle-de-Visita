@@ -57,8 +57,8 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
     </form>
     
     <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
-        <table class="d-flex align-items-center table-css flex-column col-sm-12">
-            <thead class="col-sm-11 ">
+        <table class="d-flex align-items-center table-css flex-column col-sm-12 table-fixed">
+            <thead class="col-sm-11 align-top">
                 <tr class="d-flex flex-row justify-content-around align-items-center mb-4 font-css font-css-dark">
                     <th>Nome</th>
                     <th>Empresa </th>
