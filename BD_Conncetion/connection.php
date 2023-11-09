@@ -1,4 +1,5 @@
 <?php
+session_start();
 $hostname='192.168.0.30';
 $dbname = 'ELIPSE_E3';
 $username='elipse';

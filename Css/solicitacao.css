@@ -78,3 +78,12 @@
     margin-top: 3vh;
     padding: 3%;
 }
+
+/* solicitação_entrevista */
+.color{
+    background-color: #00719D;
+    padding: 2%;
+    width: 50%;
+    border: 0;
+    border-radius: .3em;   
+}

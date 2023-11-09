@@ -1,5 +1,4 @@
 <?php 
-session_start();
 include_once('../BD_Conncetion/connection.php'); 
 // require_once '../vendor/autoload.php'; // Carrega as dependências do Composer
 

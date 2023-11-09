@@ -28,7 +28,7 @@ function addInput_e_RemoverIput() {
     labelEmail.innerHTML = "Email:";
 
     const labelPeriodoVisita = document.createElement("label");
-    labelPeriodoVisita.className = "label-css";
+    labelPeriodoVisita.className = "label-css ";
     labelPeriodoVisita.innerHTML = "Data da entrevista:";
 
     const inputNome = document.createElement("input");

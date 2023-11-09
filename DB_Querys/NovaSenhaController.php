@@ -1,6 +1,5 @@
 <?php
-session_start();
-include_once('../BD_Conncetion/connection.php'); 
+include_once('../BD_Conncetion/connection.php');
 
 $email = "";
 $senha = "";
@@ -11,45 +10,42 @@ $emailErro = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    if (empty(trim($_POST["email"]))){
+    if (empty(trim($_POST["email"]))) {
         $emailErro = "Por favor, coloque um email válido";
     } else {
         $email = trim($_POST["email"]);
     }
-    if (empty(trim($_POST["senha"])) && empty(trim($_POST["senhaRepetida"]))) {  
+    if (empty(trim($_POST["senha"])) && empty(trim($_POST["senhaRepetida"]))) {
         $senhaErro = "Por favor, insira uma senha";
     } elseif (strlen(trim($_POST["senha"])) < 6 && strlen(trim($_POST["senhaRepetida"])) < 6) {
         $senhaErro = "A senha deve ter pelo menos 6 caracteres";
-    } elseif (trim($_POST["senha"]) !== trim($_POST["senhaRepetida"]) ) {
+    } elseif (trim($_POST["senha"]) !== trim($_POST["senhaRepetida"])) {
         $senhaErro = "As senhas não são iguais. Por favor, digite a mesma senha nos dois campos.";
-    }else {
+    } else {
         $senha = $_POST["senha"];
         $senhaRepetida = $_POST["senhaRepetida"];
-        $senha_hash = trim(password_hash($senha, PASSWORD_DEFAULT)); 
-        $senha_hash_repetida = trim(password_hash($senhaRepetida, PASSWORD_DEFAULT)); 
+        $senha_hash = trim(password_hash($senha, PASSWORD_DEFAULT));
+        $senha_hash_repetida = trim(password_hash($senhaRepetida, PASSWORD_DEFAULT));
     }
 
     if (empty($emailErro) && empty($senhaErro)) {
-        if($senha === $senhaRepetida){
+        if ($senha === $senhaRepetida) {
 
-               $verificarEmail = $dbDB->prepare("SELECT * FROM usuarios WHERE email = :email");
-               $verificarEmail->bindParam(':email', $email);
-               $verificarEmail->execute();
-               $verificado = $verificarEmail->fetchColumn();
+            $verificarEmail = $dbDB->prepare("SELECT * FROM usuarios WHERE email = :email");
+            $verificarEmail->bindParam(':email', $email);
+            $verificarEmail->execute();
+            $verificado = $verificarEmail->fetchColumn();
 
-               if ($verificado > 0) {
-                    $inserir = $dbDB->prepare("UPDATE usuarios SET senha = :senha WHERE email = :email ");
-                    $inserir->bindParam(':email', $email);
-                    $inserir->bindParam(':senha', $senha_hash_repetida);
-                        if($inserir->execute()){
-                            header("Location: ../View/login.php");
-                        }
-               }else{
+            if ($verificado > 0) {
+                $inserir = $dbDB->prepare("UPDATE usuarios SET senha = :senha WHERE email = :email ");
+                $inserir->bindParam(':email', $email);
+                $inserir->bindParam(':senha', $senha_hash_repetida);
+                if ($inserir->execute()) {
+                    header("Location: ../View/login.php");
+                }
+            } else {
                 $emailErro = "Email não foi encontrado";
-
-               }
+            }
         }
     }
 }
-
-?>

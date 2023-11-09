@@ -24,6 +24,10 @@
     background: #002a3a;
 
 }
+.w-form{
+    width: 40%;
+    background-color: #00b1f2ee;
+}
 /**********MODO DARK***********/
 .dark .card-home-back-success{
     display: flex;
