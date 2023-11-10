@@ -44,65 +44,6 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!-- <div class="d-flex col-sm-12 justify-content-center ">
-        <div class=" col-sm-10 bg-light justify-content-center p-4" id="card">
-            <table id="myTable" class="display">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Empresa </th>
-                        <th>Telefone</th>
-                        <th>Area da Visita</th>
-                        <th>Data de Visita</th>
-                        <?php
-                        // Verificar se o usuário tem permissão de acesso à seção, Se o usuário for diretor ou gestor, eles têm permissão de acesso
-                        if (isset($acesso)) { ?>
-                            <th>Editar</th>
-                            <th>Deletar</th>
-                        <?php
-                        } else {
-                            echo "";
-                        }
-                        ?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($resultado as $consultas) { ?>
-                        <tr>
-                            <?php
-                            // Verificar se o usuário tem permissão de acesso à seção, Se o usuário for diretor ou gestor, eles têm permissão de acesso
-                            if (!isset($acesso)) { ?>
-                                <td><?= $consultas['nome']; ?></td>
-                                <td><?= $consultas['empresa']; ?></td>
-                                <td><?= $consultas['area_da_visita']; ?></td>
-                                <td><?= $consultas['periodo_visita_de']; ?></td>
-                            <?php
-                            } else { ?>
-                                <td class=""><a href="solicitacaoIndex.php?id=<?= $consultas['id'] ?>" class="font-id-css"><?= $consultas['nome'] ?></a> </td>
-                                <td><?= $consultas['empresa']; ?></td>
-                                <td><?= $consultas['celular']; ?></td>
-                                <td><?= $consultas['area_da_visita']; ?></td>
-                                <td><?= date('d/m/Y - H:i', strtotime($consultas['periodo_visita_de'])) ?></td>
-                            <?php
-                            }
-                            ?>
-
-                            <?php
-                            // Verificar se o usuário tem permissão de acesso à seção, Se o usuário for diretor ou gestor, eles têm permissão de acesso
-                            if (isset($acesso)) { ?>
-                                <td><a class="btn btn-success text-white" href="solicitacaoIndex.php?id=<?= $consultas['id']; ?>">Editar</a></td>
-                                <td><a class="btn btn-danger text-white text-decoration-none" href="../DB_Querys/solicitacaoDelete.php?id=<?= $consultas['id']; ?>">Excluir</a></td>
-                            <?php
-                            } else {
-                                echo "";
-                            }
-                            ?>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </div> -->
     <form action="" method="GET" class="d-flex justify-content-center">
         <div class="d-flex align-items-center col-sm-10 ps-4">
             <div class="d-flex align-items-center rounded-pill col-sm-2 bg-light border-radius-css">

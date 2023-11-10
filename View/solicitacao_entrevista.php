@@ -20,6 +20,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 Solicitação de entrevista
             </h2>
         </div>
+
+        <div class="d-flex mt-5 mb-5 col-sm-10 justify-content-end">
+            <div class="d-flex flex-row col-sm-10 justify-content-end">
+                <div class="card-home-back-2 justify-content-end shadow me-4" id="cursor">
+                    <div class="card-home-front-2 p-3" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <p class="m-0 text-white titulo-card">Total de entrevistas cadastradas: <?php echo count($dados) ?> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class=" d-flex col-sm-10 mb-5 bg-form-css align-items-center justify-content-around p-3 ">
             <div class="col-sm-10 d-flex justify-content-around">
                 <div class="d-flex flex-column col-sm-5">
@@ -59,80 +70,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </form>
         </div>
 
-        <div class="d-inline-flex gap-1 mt-5 col-sm-10">
-            <div class="d-flex flex-row col-sm-10 justify-content-start">
-                <div class="card-home-back-2 justify-content-end shadow me-4" id="cursor" >
-                    <div class="card-home-front-2 p-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        <p class="m-0 text-white titulo-card">Total de entrevistas cadastradas: <?php echo count($dados) ?> </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="collapse col-sm-10 mt-5 mb-5" id="collapseExample" data-bs-parent=".container">
-            <table class="d-flex align-items-center table-css flex-column col-sm-12 table-fixed">
-                <thead class="">
-                    <tr class="thead-designer font-css font-css-dark">
-                        <th class="th-designer">Nome</th>
-                        <th class="th-designer">Celular</th>
-                        <th class="th-designer">Email</th>
-                        <th class="th-designer">Data da entrevista</th>
-
-                    </tr>
-                </thead>
-
-                <?php
-                foreach ($dado as $registros) { ?>
-                    <tbody>
-                        <tr class="listagem-back-blue mb-4">
-                            <td class="listagem-front-white font-css ">
-                                <span class="table-designer ">
-                                    <?php echo $registros['nome']; ?>
-                                </span>
-                                <span class="table-designer">
-                                    <?php echo $registros['celular'] ?>
-                                </span>
-                                <span class="table-designer">
-                                    <?php echo $registros['email']; ?>
-                                </span>
-                                <span class="table-designer">
-                                    <?php echo date('d/m/Y - H:i', strtotime($registros['data_entrevista'])) ?>
-                                </span>
-                            </td>
-                        </tr>
-
-                    </tbody>
-
-                <?php } ?>
-            </table>
-            <div class="d-flex col-sm-12 justify-content-center mb-4">
-                <div class="d-flex flex-row justify-content-end col-sm-9 align-items-center">
-                    <a href="?paginaAtual=1" class="me-2 text-decoration-none  color-paginacao">Primeira</a>
-                        <?php if ($paginaAtual > 1) : ?>
-                            <a href="?paginaAtual=<?= $paginaAtual - 1 ?>">
-                                <?php endif; ?>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
-                                    <path d="M10 1L2 5.76191L10 11" stroke="#004159" stroke-width="2" stroke-linecap="round" />
-                                </svg>
-                            </a>
-
-                            <div class="d-flex align-items-center justify-content-center circle-css">
-                                <span><?= $paginaAtual ?></span>
-                            </div>
-
-                            <?php if ($paginaAtual < $paginas) : ?>
-                                <div class="d-flex flex-row justify-content-center align-items-center pb-1 ">
-                                    <a href="?paginaAtual=<?= $paginaAtual + 1 ?>">
-                                        <?php endif; ?>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
-                                            <path d="M1 11L9 6.23809L1 1" stroke="#004159" stroke-width="2" stroke-linecap="round" />
-                                        </svg>
-                                    </a>
-                                </div>
-                    <a href="?paginaAtual=<?= $paginas ?>" class="ms-2 text-decoration-none  color-paginacao">Ultima</a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -166,6 +103,57 @@ if (isset($_SESSION['sucesso'])) {
 }
 ?>
 
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-aprov p-3" >
+        <div class="d-flex flex-row justify-content-end col-sm-12">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-content modal-content-css border-0 bg-transparent">
+            <div class="modal-body modal-body-css">
+                <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
+                    <table class="d-flex align-items-center table-css flex-column col-sm-12 table-fixed">
+                        <thead class="">
+                            <tr class="thead-designer font-css font-css-dark">
+                                <th class="th-designer">Nome</th>
+                                <th class="th-designer">Celular</th>
+                                <th class="th-designer">Email</th>
+                                <th class="th-designer">Data da entrevista</th>
 
+                            </tr>
+                        </thead>
+
+                        <?php
+                        foreach ($dados as $registros) { ?>
+                            <tbody>
+                                <tr class="listagem-back-blue mb-4">
+                                    <td class="listagem-front-white font-css ">
+                                        <span class="table-designer ">
+                                            <?php echo $registros['nome']; ?>
+                                        </span>
+                                        <span class="table-designer">
+                                            <?php echo $registros['celular'] ?>
+                                        </span>
+                                        <span class="table-designer">
+                                            <?php echo $registros['email']; ?>
+                                        </span>
+                                        <span class="table-designer">
+                                            <?php echo date('d/m/Y - H:i', strtotime($registros['data_entrevista'])) ?>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        <?php } ?>
+                    </table>
+                    
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-danger col-sm-3" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="../Js/main.js" crossorigin="anonymous"></script>
 <script src="../Js/dataTable.js" crossorigin="anonymous"></script>

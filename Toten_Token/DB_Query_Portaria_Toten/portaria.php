@@ -20,8 +20,8 @@ if (isset($_GET['id'])) {
         $_SESSION['visita_confirmada'] = "Estamos a caminho para ajudá-lo, aguarde um momento";
         header("Location: ../../../Controle-de-Visita-FullStack/index.php");
     } else {
-        if (isset($_SESSION['token']) && is_numeric($_SESSION['token'])) {
-            $token =  $_SESSION['token'];
+        if (isset($_POST['token']) && is_numeric($_POST['token'])) {
+            $token =  $_POST['token'];
             
             $verificarToken = $dbDB->prepare("SELECT id, identificador FROM Visitante WHERE id = :id_Visitante AND identificador = :token");
             $verificarToken->bindParam(':id_Visitante', $id_Visitante);
@@ -34,7 +34,7 @@ if (isset($_GET['id'])) {
                 $confirmar = $dbDB->prepare("INSERT INTO Registro_da_Visita (id_Visitante) VALUES (:id_Visitante)");
                 $confirmar->bindParam(':id_Visitante', $id_Visitante);
                 $confirmar->execute();
-
+                
                 $_SESSION['MensagemPortaria'] = "Nossa equipe recebeu sua solicitação e já está indo ao seu encontro";
                 header("Location: ../../../Controle-de-Visita-FullStack/index.php");
             } else {
@@ -49,4 +49,3 @@ if (isset($_GET['id'])) {
 } else {
     echo "Nenhum resultado encontrado.";
 }
-?>

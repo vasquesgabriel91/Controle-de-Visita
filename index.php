@@ -2,36 +2,41 @@
 require_once './BD_Conncetion/connection.php';
 require_once './Toten_Token/View/Side_Bar_Toten.php';
 
-// $paginaAtual = 1;
-// $limite = 5;
+$paginaAtual = 1;
+$limite = 5;
 
-// if (isset($_GET['paginaAtual'])) { 
-//     $paginaAtual = filter_input(INPUT_GET, "paginaAtual", FILTER_VALIDATE_INT);
-// } else {
-//     $paginaAtual = 1;
-// }
+if (isset($_GET['paginaAtual'])) {
+    $paginaAtual = filter_input(INPUT_GET, "paginaAtual", FILTER_VALIDATE_INT);
+} else {
+    $paginaAtual = 1;
+}
 
-// if ($paginaAtual) {
-//     $hoje = date('Y-m-d'); // Formato: Ano-Mês-Dia
+if ($paginaAtual) {
+    $hoje = date('Y-m-d'); // Formato: Ano-Mês-Dia
+    $inicio = ($paginaAtual * $limite) - $limite;
 
-//     $inicio = ($paginaAtual * $limite) - $limite;
+    $visitas_Hoje = $dbDB->prepare("SELECT * FROM Visitante WHERE CONVERT(DATE, periodo_visita_de) = :hoje ORDER BY id OFFSET $inicio ROWS FETCH NEXT $limite ROWS ONLY");
+    $visitas_Hoje->bindValue(':hoje', $hoje, PDO::PARAM_STR);
+    $visitas_Hoje->execute();
+    $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
 
-//     $consulta_data = $dbDB->prepare("SELECT * FROM Visitante WHERE CONVERT(DATE, periodo_visita_de) = :hoje ORDER BY id OFFSET $inicio ROWS FETCH NEXT $limite ROWS ONLY");
-//     $consulta_data->bindParam(':hoje', $hoje);
-//     $consulta_data->execute();
-//     $resultado_data = $consulta_data->fetchAll(PDO::FETCH_ASSOC);
+    $consulta_count_data = $dbDB->prepare("SELECT COUNT(*) as count FROM Visitante WHERE CONVERT(DATE, periodo_visita_de) = :hoje");
+    $consulta_count_data->bindParam(':hoje', $hoje);
+    $consulta_count_data->execute();
+    $totalRegistros = $consulta_count_data->fetchColumn();
+    $paginas = ceil($totalRegistros / $limite);
+}
 
-//     $consulta_count_data = $dbDB->prepare("SELECT COUNT(*) as count FROM Visitante WHERE CONVERT(DATE, periodo_visita_de) = :hoje");
-//     $consulta_count_data->bindParam(':hoje', $hoje);
-//     $consulta_count_data->execute();
-//     $totalRegistros = $consulta_count_data->fetchColumn();
-//     $paginas = ceil($totalRegistros / $limite);
-// }
-// $hoje = date('Y-m-d');
-$consulta_data = $dbDB->prepare("SELECT * FROM Visitante ORDER BY id ASC");
-$consulta_data->execute();
-$resultado_data = $consulta_data->fetchAll(PDO::FETCH_ASSOC);
+if (isset($_GET['pesquisar']) && !empty($_GET['pesquisar'])) {
+    $pesquisa = '%' . strtolower($_GET['pesquisar']) . '%'; // Converter para minúsculas
+    $consulta = $dbDB->prepare("SELECT * FROM Visitante WHERE LOWER(nome) LIKE ? ORDER BY id OFFSET $inicio ROWS FETCH NEXT $limite ROWS ONLY");
+    $consulta->execute([$pesquisa]);
+} else {
+    $consulta = $dbDB->prepare("SELECT * FROM Visitante ORDER BY id");
+    $consulta->execute();
+}
 
+$resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -54,9 +59,10 @@ $resultado_data = $consulta_data->fetchAll(PDO::FETCH_ASSOC);
             <div class="d-flex flex-column col-sm-12 d-flex justify-content-center align-items-center">
 
                 <span class="titulo"> Digite seu Token de confirmação</span>
-                <form action="" method="post" class="col-sm-11 mt-5">
+
+                <form action="" method="GET" class="col-sm-11 mt-5">
                     <div class="d-flex align-items-center justify-content-between rounded-pill col-sm-12 bg-light border-radius-css">
-                        <input type="text" autocomplete="off" placeholder="Pesquisar" id="pesquisar" name="token" class="input rounded-pill border-0 p-1 me-2 bg-light col-sm-10 focus-outline-none-css">
+                        <input type="text" autocomplete="off" placeholder="Pesquisar" id="pesquisar" name="pesquisar" class="input rounded-pill border-0 p-1 me-2 bg-light col-sm-10 focus-outline-none-css">
                         <button type="submit" class="border-0 bg-transparent d-flex flex-row align-items-center justify-content-end col-sm-1 me-3 rounded-pill">
                             <i class="fa-solid fa-magnifying-glass me-3" style="color: #00b0f2;"> </i>
                             <span class="font-css">PESQUISAR</span>
@@ -69,57 +75,108 @@ $resultado_data = $consulta_data->fetchAll(PDO::FETCH_ASSOC);
                 <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
                     <table class="d-flex align-items-center table-css flex-column col-sm-12 table-fixed">
 
-                        <?php
-                        $token  = "";
-                        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                            if (isset($_POST['token'])) {
-                                $token = $_POST['token'];
-                                $_SESSION['token'] = $token;
+                        <thead class="">
+                            <tr class="thead-designer font-css font-css-dark p-0">
+                                <th class="th-designer">Nome</th>
+                                <th class="th-designer">Empresa </th>
+                                <th class="th-designer">Telefone</th>
+                                <th class="th-designer">Presença</th>
 
-                                $consulta_token = $dbDB->prepare("SELECT * FROM Visitante WHERE identificador = :identificador ORDER BY id ASC");
-                                $consulta_token->bindParam(':identificador', $token);
-                                $consulta_token->execute();
-                                $id_consulta_token = $consulta_token->fetchAll(PDO::FETCH_ASSOC);
-                            } else {
-                                echo "Nenhum resultado encontrado.";
-                            }
-                        }
-                        if (isset($id_consulta_token)) {
-                            foreach ($id_consulta_token as $consulta) {
-                        ?>
-                                <thead class="">
-                                    <tr class="thead-designer font-css font-css-dark p-0">
-                                        <th class="th-designer">Nome</th>
-                                        <th class="th-designer">Empresa </th>
-                                        <th class="th-designer">Telefone</th>
-                                        <th class="th-designer">Data da Visita</th>
-                                        <th class="th-designer">Presença</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="listagem-back-blue mb-4">
-                                        <td class="listagem-front-white font-css p-0">
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($resultadosHoje as $consulta) {
+                            ?>
 
-                                            <span class="table-designer"><?= $consulta['nome']; ?></span>
-                                            <span class="table-designer"><?= $consulta['empresa']; ?></span>
-                                            <span class="table-designer"><?= $consulta['telefone']; ?></span>
-                                            <span class="table-designer"><?= $consulta['periodo_visita_de']; ?></span>
-                                            <span class="table-designer">
-                                                <a href="../Controle-de-Visita-FullStack/Toten_Token/DB_Query_Portaria_Toten/portaria.php?id=<?= $consulta['id'] ?>" class="btn btn-info  font-id-css">
-                                                    Confirmar
-                                                </a>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tr class="listagem-back-blue mb-4">
+                                    <td class="listagem-front-white font-css p-0">
+                                        <span class="table-designer"><?= $consulta['nome']; ?></span>
+                                        <span class="table-designer"><?= $consulta['empresa']; ?></span>
+                                        <span class="table-designer"><?= $consulta['telefone']; ?></span>
+                                        <span class="table-designer " data-bs-toggle="modal"  data-bs-target="#exampleModal<?= $consulta['id']; ?>" >
+                                            <a class="btn btn-info  font-id-css">
+                                                Confirmar
+                                            </a>
+                                        </span>
+
+
+                                    </td>
+                                </tr>
+                        </tbody>
+                        <div class="modal fade" id="exampleModal<?= $consulta['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog p-3">
+                                <div class="modal-content modal-content-css border-0 bg-transparent col-sm-10">
+                                    <div class=" col-sm-12 ">
+                                        <div class="d-flex flex-column align-items-center justify-content-center flash-message-child p-1 col-sm-12 mt-5 ">
+                                            <i class="fa-solid fa-circle-check" style="color: #08d415; font-size: 5rem;"></i>
+
+                                            <div class="d-flex flex-column justify-content-between align-items-center col-sm-12 mt-4">
+                                                <p class="font-flash-message">
+                                                    Digite seu token
+                                                </p>
+                                                <form action="../Controle-de-Visita-FullStack/Toten_Token/DB_Query_Portaria_Toten/portaria.php?id=<?= $consulta['id'] ?>" method="POST" class="col-sm-11 mt-1 mb-3">
+                                                    <div class="d-flex align-items-center justify-content-between rounded-pill col-sm-12 bg-light border-radius-css">
+                                                        <input type="text" autocomplete="off" placeholder="Pesquisar" id="token" name="token" class="input rounded-pill border-0 p-1 me-2 bg-light col-sm-10 focus-outline-none-css">
+                                                        <button type="submit" class="border-0 bg-transparent d-flex flex-row align-items-center justify-content-end col-sm-1 me-3 rounded-pill">
+                                                            <i class="fa-solid fa-magnifying-glass me-3" style="color: #00b0f2;"> </i>
+                                                            <span class="font-css">PESQUISAR</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="keyboard"></div>
+
+                                                    <div class="font-css text-center d-flex co-sm-12 justify-content-between p-3 mt-3">
+                                                        <span class="table-designer">
+                                                            <input type="submit" value="Enviar" class="btn btn-info"> </span>
+                                                        </span>
+                                                        <div class="d-flex justify-content-end">
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         <?php
                             }
-                        } else {
-                            // Caso não haja resultados para exibir
-                            echo "Nenhum resultado encontrado";
-                        }
+
                         ?>
                     </table>
+                </div>
+                <div class="d-flex col-sm-12 justify-content-center mb-4">
+                    <div class="d-flex flex-row justify-content-end col-sm-9 align-items-center">
+                        <a href="?paginaAtual=1" class="me-2 text-decoration-none  color-paginacao">Primeira</a>
+                        <?php if ($paginaAtual > 1) : ?>
+                            <a href="?paginaAtual=<?= $paginaAtual - 1 ?>">
+                            <?php endif; ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
+                                <path d="M10 1L2 5.76191L10 11" stroke="#004159" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                            </a>
+
+                            <div class="d-flex align-items-center justify-content-center circle-css">
+                                <span><?= $paginaAtual ?></span>
+                            </div>
+
+                            <?php if ($paginaAtual < $paginas) : ?>
+                                <a href="?paginaAtual=<?= $paginaAtual + 1 ?>">
+                                <?php endif; ?>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
+                                    <path d="M1 11L9 6.23809L1 1" stroke="#004159" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                                </a>
+                                <a href="?paginaAtual=<?= $paginas ?>" class="ms-2 text-decoration-none  color-paginacao">Ultima</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,6 +184,7 @@ $resultado_data = $consulta_data->fetchAll(PDO::FETCH_ASSOC);
 
 
 </body>
+
 
 <?php
 if (isset($_SESSION['visita_confirmada'])) {
@@ -202,7 +260,5 @@ if (isset($_SESSION['MensagemPortaria'])) {
 <?php
 }
 ?>
-<script src="../Controle-de-Visita-FullStack/Toten_Token/JS/main.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.js"></script>
+<script src="../Controle-de-Visita-FullStack/Toten_Token/JS/main.js"></script>

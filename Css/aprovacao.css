@@ -50,6 +50,24 @@
 .modal {
     backdrop-filter: blur(0.4em);
 }
+.modal-dialog-aprov{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: #fafafa;
+    border: 0.15em solid #00bbff;
+    border-radius: 1em;
+    padding: 2em;
+    max-width: 0;
+    margin: 0 ;
+    min-width: 70em;
+}
+.dark .modal-dialog-aprov{
+    background-color: #001d28;
+
+}
 .modal-dialog-css{
     display: flex;
     flex-direction: column;
