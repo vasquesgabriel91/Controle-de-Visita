@@ -59,7 +59,6 @@
                         <select  name="motivo_visita" id="motivo_visita">
                             <option><?= $resultadoRead['motivo_visita']; ?></option>
                             <option value="Visita">Visita</option>
-                            <option value="Entrevista">Entrevista</option>
                             <option value="Prestador de serviço">Prestador de serviço</option>
                         </select>
                             

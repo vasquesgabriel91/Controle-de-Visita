@@ -22,11 +22,11 @@ if($paginaAtual){
 
     $inicio = ($paginaAtual * $limite) - $limite;
     
-    $consulta = $dbDB->prepare("SELECT * FROM Visitante ORDER BY  id OFFSET $inicio ROWS FETCH NEXT $limite ROWS ONLY");
+    $consulta = $dbDB->prepare("SELECT * FROM Visitante WHERE motivo_visita != 'Entrevista' ORDER BY id OFFSET $inicio ROWS FETCH NEXT $limite ROWS ONLY");
     $consulta->execute();
-    $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
-    
-    $registro = $dbDB->query("SELECT COUNT(id) as count FROM Visitante" )->fetch()["count"];
+    $resultad = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    $registro = $dbDB->query("SELECT COUNT(id) as count FROM Visitante WHERE motivo_visita != 'Entrevista'")->fetch()["count"];
     $paginas = ceil($registro / $limite);
     
 }

@@ -1,25 +1,37 @@
-//TECLADO VIRTUAL FUNCTION TELA PORTARIA 
-const Keyboard = window.SimpleKeyboard.default;
 
-const input = document.getElementById('pesquisar');
-const keyboardDiv = document.querySelector('.simple-keyboard');
 
-input.addEventListener('click', function() {
-  keyboardDiv.classList.toggle('simple-keyboard-flex');
-});
+  function initKeyboard2(inputId, keyboardDivClass) {
+    const teclado = window.SimpleKeyboard.default;
+    const input = document.getElementById(inputId);
+    const keyboardDiv = document.querySelector(`.${keyboardDivClass}`);
+ 
+    input.addEventListener('click', function() {
+      keyboardDiv.classList.toggle('simple-keyboard-flex');
+    });
 
-const myKeyboard = new Keyboard({
-  onChange: input => onChange(input),
-  onKeyPress: button => onKeyPress(button)
-});
+    const myKeyboard = new teclado({
+      onChange: value => onChange(input, value),
+      onKeyPress: button => onKeyPress(button)
+    });
 
-function onChange(input) {
-  document.querySelector(".input").value = input;
-  console.log("Input changed", input);
-}
+    function onChange(input, value) {
+      input.value = value;
+      console.log("Input changed", value);
+    }
 
-function onKeyPress(button) {
-  console.log("Button pressed", button);
-}
+    function onKeyPress(button) {
+      console.log("Button pressed", button);
+    }
+
+    return myKeyboard;
+  }
+
+  const keyboardPesquisar = initKeyboard2('token', 'simple-keyboard');
+
+  // const keyboardPesquisarToken = initKeyboard2('token', 'simple-keyboard');
+
+
+
+
 
 

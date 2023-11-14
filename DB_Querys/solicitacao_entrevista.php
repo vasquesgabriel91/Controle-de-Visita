@@ -5,20 +5,45 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../View/login.php");
     exit;
 }
-
-function inserirSolicitacao($dbDB, $nome, $celular, $email, $data_entrevista)
+function identificador($dbDB)
 {
-    $inserir = $dbDB->prepare("INSERT INTO solicitacao_entrevista (nome, celular, email, data_entrevista) VALUES (:nome, :celular, :email, :data_entrevista)");
+    $identificador = rand(1, 1000);
+
+    $stmt = $dbDB->prepare("SELECT COUNT(*) FROM Visitante WHERE identificador = :identificador");
+    $stmt->bindParam(':identificador', $identificador, PDO::PARAM_INT);
+    $stmt->execute();
+    $count = $stmt->fetchColumn();
+
+    // Se o identificador já existe no banco de dados, gere um novo
+    while ($count > 0) {
+        $identificador = rand(1, 1000); // Gere um novo identificador
+        $stmt->bindParam(':identificador', $identificador, PDO::PARAM_INT);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+    }
+
+    return $identificador;
+}
+
+function inserirSolicitacao($dbDB, $nome, $celular, $email, $data_entrevista, $motivo_visita, $identificador)
+{
+    $inserir = $dbDB->prepare("INSERT INTO Visitante (nome, celular, email, periodo_visita_de, motivo_visita ,identificador) VALUES (:nome, :celular, :email, :periodo_visita_de, :motivo_visita, :identificador)");
     $inserir->bindParam(':nome', $nome);
     $inserir->bindParam(':celular', $celular);
     $inserir->bindParam(':email', $email);
     $data_entrevista = date('Y-m-d H:i:s', strtotime($data_entrevista));
-    $inserir->bindParam(':data_entrevista', $data_entrevista);
+    $inserir->bindParam(':periodo_visita_de', $data_entrevista);
+    $inserir->bindParam(':motivo_visita', $motivo_visita);
+    $inserir->bindParam(':identificador', $identificador);
+
+
 
     if ($inserir->execute()) {
         $id_usuario = $_SESSION["id"];
-        $inserir_aprov = $dbDB->prepare("INSERT INTO aprovacao (id_usuario, aprovado_reprovado) VALUES (:id_usuario, 'on')");
+        $id = $dbDB->lastInsertId();
+        $inserir_aprov = $dbDB->prepare("INSERT INTO aprovacao (id_visitante, id_usuario, aprovado_reprovado) VALUES (:resultados, :id_usuario, 'on' )");
         $inserir_aprov->bindParam(':id_usuario', $id_usuario);
+        $inserir_aprov->bindParam(':resultados', $id);
         if ($inserir_aprov->execute()) {
             $_SESSION['sucesso'] = "Entrevista foi criada e aprovada com sucesso";
             header("Location: ../View/solicitacao_entrevista.php");
@@ -31,13 +56,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $celular = $_POST['celular'][$i];
         $email = $_POST['email'][$i];
         $data_entrevista = $_POST['periodo_visita_de'][$i];
+        $motivo_visita = $_POST["motivo_visita"];
+
         // Chame a função para inserir os dados.
-        inserirSolicitacao($dbDB, $nome, $celular, $email, $data_entrevista);
+        $identificador = identificador($dbDB);
+
+        inserirSolicitacao($dbDB, $nome, $celular, $email, $data_entrevista, $motivo_visita, $identificador);
     }
 }
 function readSolicitacaoEntrevista($dbDB)
 {
-    $read = $dbDB->prepare("SELECT * FROM solicitacao_entrevista ORDER BY id ASC");
+    $read = $dbDB->prepare("SELECT * FROM Visitante WHERE motivo_visita = 'Entrevista' ORDER BY id ASC");
     $read->execute();
     $query = $read->fetchAll(PDO::FETCH_ASSOC);
 

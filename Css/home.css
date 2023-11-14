@@ -50,13 +50,25 @@
     box-shadow: 0px 0px 9px 0px #fabf0fe0;
 }
 
-.thead-designer {
+.thead-designer-front {
+    display: flex;
+    width: 75vw;
+    height: 9vh;
+    border-radius: 17px;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+}
+
+.thead-designer{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 73.3vw;
-    margin-bottom: 5vh;
+    width: 74.3vw;
+    height: 9vh;
 }
+
+
 
 .th-designer {
     height: 100%;

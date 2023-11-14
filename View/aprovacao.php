@@ -51,7 +51,7 @@ $ids_aprovados = $count_aprovado->fetchAll(PDO::FETCH_COLUMN);
     <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
         <table class="d-flex align-items-center table-css flex-column col-sm-12">
             <thead class="">
-                <tr class="thead-designer">
+                <tr class="thead-designer font-css-dark">
                     <th class="th-designer" scope="col">Nome</th>
                     <th class="th-designer" scope="col">Empresa </th>
                     <th class="th-designer" scope="col">Area da Visita</th>
@@ -65,9 +65,9 @@ $ids_aprovados = $count_aprovado->fetchAll(PDO::FETCH_COLUMN);
             foreach ($resultado as $resultados) { ?>
 
                 <tbody>
-                    <tr class="listagem-back-blue mb-4 bg-warning " id="cursor">
-                        <td class="listagem-front-white font-css border-warning" id="">
-                            <span class="table-designer ">
+                    <tr class="listagem-back-blue mb-4">
+                        <td class="listagem-front-white font-css" id="">
+                            <span class="table-designer">
                                 <a href="solicitacaoIndex.php?id=<?= $resultados['id'] ?>" class="font-id-css ">
                                     <?= $resultados['nome'] ?>
                                 </a>
@@ -76,12 +76,12 @@ $ids_aprovados = $count_aprovado->fetchAll(PDO::FETCH_COLUMN);
                             <span class="table-designer"><?= $resultados['area_da_visita']; ?></span>
                             <span class="table-designer"><?= date('d/m/Y - H:i', strtotime($resultados['periodo_visita_de'])) ?></span>
 
-                            <form action="../DB_Querys/aprovacao.php" method="POST" class="d-flex w-form  justify-content-between ">
+                            <form action="../DB_Querys/aprovacao.php" method="POST" class="d-flex w-form">
                                 <input type="hidden" name="id_visitante" value="<?= $resultados['id']; ?>">
-                                <div class="d-flex align-items-center ">
+                                <div class="d-flex align-items-center justify-content-center col-sm-6">
                                     <input type="checkbox" class="d-flex align-items-center justify-content-center" id="aprovado" name="aprovado"><span class="ms-3">Aprovar</span>
                                 </div>
-                                <div class="d-flex align-items-center me-3 ">
+                                <div class="d-flex align-items-center justify-content-center col-sm-6 ">
                                     <input type="submit" class="btn btn-outline-info d-flex align-items-center justify-content-center" id="reprovado"></input>
                                 </div>
                             </form>
@@ -110,8 +110,8 @@ $ids_aprovados = $count_aprovado->fetchAll(PDO::FETCH_COLUMN);
             <div class="modal-body modal-body-css">
                 <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
                     <table class="d-flex align-items-center table-css flex-column col-sm-12">
-                        <thead class="">
-                            <tr class="thead-designer font-css font-css-dark">
+                        <thead class="thead-designer-front">
+                            <tr class="thead-designer p-3 font-css-dark">
                                 <th class="th-designer" scope="col">Nome</th>
                                 <th class="th-designer" scope="col">Empresa </th>
                                 <th class="th-designer" scope="col">Area da Visita</th>
@@ -121,32 +121,36 @@ $ids_aprovados = $count_aprovado->fetchAll(PDO::FETCH_COLUMN);
                         </thead>
                         <?php
                         if (!empty($ids_aprovados)) {
-                            $placeholders = str_repeat('?, ', count($ids_aprovados) - 1) . '?';
-                            $query_total_aprovado = $dbDB->prepare("SELECT * FROM Visitante WHERE id IN ($placeholders)");
-                            $query_total_aprovado->execute($ids_aprovados);
+                            $ids_str = implode(',', $ids_aprovados);
+                            $query_total_aprovado = $dbDB->prepare("SELECT * FROM Visitante WHERE id IN ($ids_str)");
+                            $query_total_aprovado->execute();
                             $query = $query_total_aprovado->fetchAll(PDO::FETCH_ASSOC);
-                        } else { ?>
-                            <span id="font-css">Nenhum aprovado encontrado</span>'
-                            <?php }
-                        if (isset($query)) {
-                            foreach ($query as $querys) {
-                            ?>
-                                <tbody>
-                                    <tr class="listagem-back-blue mb-4 bg-success ">
-                                        <td class="listagem-front-white font-css border-success" id="">
-                                            <span class="table-designer ">
-                                                <a href="solicitacaoIndex.php?id=<?= $querys['id'] ?>" class="font-id-css ">
-                                                    <?= $querys['nome'] ?>
-                                                </a>
-                                            </span>
-                                            <span class="table-designer"><?= $querys['empresa']; ?></span>
-                                            <span class="table-designer "><?= $querys['area_da_visita']; ?></span>
-                                            <span class="table-designer "><?= date('d/m/Y - H:i', strtotime($querys['periodo_visita_de'])) ?></span>
-                                            <span class="table-designer ">Aprovado</span>
-                                        </td>
-                                    </tr>
-                            <?php
+                        
+                            if (!empty($query)) {
+                                foreach ($query as $querys) {
+                                    ?>
+                                    <tbody>
+                                        <tr class="listagem-back-blue mb-4 bg-success ">
+                                            <td class="listagem-front-white p-3 font-css border-success" id="">
+                                                <span class="table-designer">
+                                                    <a href="solicitacaoIndex.php?id=<?= $querys['id'] ?>" class="font-id-css ">
+                                                        <?= $querys['nome'] ?>
+                                                    </a>
+                                                </span>
+                                                <span class="table-designer"><?= $querys['empresa']; ?></span>
+                                                <span class="table-designer "><?= $querys['area_da_visita']; ?></span>
+                                                <span class="table-designer "><?= date('d/m/Y - H:i', strtotime($querys['periodo_visita_de'])) ?></span>
+                                                <span class="table-designer ">Aprovado</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
+                                }
+                            } else {
+                                echo '<span id="font-css">Nenhuma visita foi aprovada ainda.</span>';
                             }
+                        } else {
+                            echo '<span id="font-css">Nenhuma visita foi aprovada ainda.</span>';
                         }
                             ?>
                     </table>

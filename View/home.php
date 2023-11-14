@@ -8,10 +8,11 @@
 $dia_Atual = date('d/m/Y'); // Formato: Mês/Dia/Ano
 
 $hoje = date('Y-m-d'); // Formato: Ano-Mês-Dia
-$visitas_Hoje = $dbDB->prepare("SELECT * FROM Visitante WHERE CONVERT(DATE, periodo_visita_de) = :hoje ORDER BY id DESC");
+$visitas_Hoje = $dbDB->prepare("SELECT * FROM Visitante WHERE CONVERT(DATE, periodo_visita_de) = :hoje AND motivo_visita != 'Entrevista' ORDER BY id DESC");
 $visitas_Hoje->bindValue(':hoje', $hoje, PDO::PARAM_STR);
 $visitas_Hoje->execute();
 $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
+
 
 
 ?>
@@ -37,7 +38,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="card-home-back justify-content-end shadow me-4">
                 <div class="card-home-front p-3">
-                    <p class="m-0 text-white titulo-card">Total de visitas cadastradas: <?php echo count($resultado) ?> </p>
+                    <p class="m-0 text-white titulo-card">Total de visitas cadastradas: <?php echo count($resultad) ?> </p>
                 </div>
             </div>
 
@@ -57,8 +58,8 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
         <table class="d-flex align-items-center table-css flex-column col-sm-12 table-fixed">
-            <thead class="">
-                <tr class="thead-designer font-css font-css-dark">
+            <thead class="thead-designer-front">
+                <tr class="thead-designer p-3 font-css-dark  ">
                     <th class="th-designer">Nome</th>
                     <th class="th-designer">Empresa </th>
                     <th class="th-designer">Celular</th>
@@ -77,10 +78,10 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
             </thead>
             <?php
 
-            foreach ($resultado as $resultados) { ?>
+            foreach ($resultad as $resultados) { ?>
                 <tbody>
                     <tr class="listagem-back-blue mb-4">
-                        <td class="listagem-front-white font-css">
+                        <td class="listagem-front-white p-3 font-css">
                             <?php
                             // Verificar se o usuário tem permissão de acesso à seção, Se o usuário for diretor ou gestor, eles têm permissão de acesso
                             if (!isset($acesso)) { ?>
@@ -161,194 +162,193 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-    <?php
-    $id_aprovado = null; // Inicialize a variável com um valor padrão
+<?php
+$id_aprovado = null; // Inicialize a variável com um valor padrão
 
-    if (isset($_SESSION['Erro_Para_deletar_Aprovados'])) {
+if (isset($_SESSION['Erro_Para_deletar_Aprovados'])) {
 
-    ?>
-        <div class="alert position-absolute flash-message">
+?>
+    <div class="alert position-absolute flash-message">
 
-            <div class="flash-message-child p-4">
-                <i class="fa-solid fa-circle-exclamation fa-shake " style="color: #fb1313; font-size: 5rem;"></i>
+        <div class="flash-message-child p-4">
+            <i class="fa-solid fa-circle-exclamation fa-shake " style="color: #fb1313; font-size: 5rem;"></i>
 
-                <div class="d-flex flex-column justify-content-between align-items-center mt-4">
-                    <p class="font-flash-message">
-                        Tem certeza?
-                    </p>
-                    <span class="font-css">
-                        <?php
+            <div class="d-flex flex-column justify-content-between align-items-center mt-4">
+                <p class="font-flash-message">
+                    Tem certeza?
+                </p>
+                <span class="font-css">
+                    <?php
 
-                        echo $_SESSION['Erro_Para_deletar_Aprovados'];
+                    echo $_SESSION['Erro_Para_deletar_Aprovados'];
 
-                        unset($_SESSION['Erro_Para_deletar_Aprovados']);
-                        ?>
-                    </span>
-                </div>
-
-                <div class="d-flex flex-row justify-content-around col-sm-7 mt-4">
-                    <button type="submit" class="btn btn-danger col-sm-5" data-bs-dismiss="alert" aria-label="Close">Cancelar</button>
-                    <form action="../DB_Querys/solicitacaoDelete.php" method="GET" class="col-sm-5">
-                        <input type="submit" value="Apagar" name="id_aprovado" class="col-sm-12  btn btn-success">
-                    </form>
-                </div>
+                    unset($_SESSION['Erro_Para_deletar_Aprovados']);
+                    ?>
+                </span>
             </div>
-        </div>
 
-    <?php
-    }
-    ?>
-
-    <?php
-    if (isset($_SESSION['deletar_Visitas'])) {
-
-    ?>
-        <div class="alert position-absolute flash-message">
-
-            <div class="flash-message-child p-4">
-                <i class="fa-solid fa-circle-exclamation fa-shake " style="color: #fb1313; font-size: 5rem;"></i>
-
-                <div class="d-flex flex-column justify-content-between align-items-center mt-4">
-                    <p class="font-flash-message">
-                        Tem certeza?
-                    </p>
-                    <span class="font-css">
-                        <?php
-
-                        echo $_SESSION['deletar_Visitas'];
-
-                        unset($_SESSION['deletar_Visitas']);
-                        ?>
-                    </span>
-                </div>
-
-                <div class="d-flex flex-row justify-content-around col-sm-7 mt-4">
-                    <button type="submit" class="btn btn-danger col-sm-5" data-bs-dismiss="alert" aria-label="Close">Cancelar</button>
-                    <form action="../DB_Querys/solicitacaoDelete.php" method="GET" class="col-sm-5">
-                        <input type="submit" value="Apagar" name="excluir_Registro" class="col-sm-12  btn btn-success">
-                    </form>
-                </div>
-            </div>
-        </div>
-
-    <?php
-    }
-    ?>
-
-
-
-    <?php
-    if (isset($_SESSION['deletado'])) {
-    ?>
-        <div class="alert position-absolute flash-message">
-            <div class="flash-message-child p-4">
-                <i class="fa-solid fa-circle-check" style="color: #08d415; font-size: 5rem;"></i>
-
-                <div class="d-flex flex-column justify-content-between align-items-center mt-4">
-                    <p class="font-flash-message">
-                        Deletado
-                    </p>
-                    <span class="font-css">
-                        <?php
-                        echo $_SESSION['deletado'];
-                        unset($_SESSION['deletado']);
-                        ?>
-                    </span>
-                </div>
-
-                <div class="d-flex flex-row justify-content-around col-sm-7 mt-4">
-                    <button type="submit" class="btn btn-danger col-sm-5" data-bs-dismiss="alert" aria-label="Close">Fechar</button>
-                </div>
-            </div>
-        </div>
-
-    <?php
-    }
-    ?>
-
-
-    <?php
-    if (isset($_SESSION['atualizado_sucesso'])) {
-    ?>
-        <div class="alert position-absolute flash-message">
-            <div class="flash-message-child p-4">
-
-                <i class="fa-solid fa-circle-check" style="color: #08d415; font-size: 5rem;"></i>
-
-                <div class="d-flex flex-column justify-content-between align-items-center mt-4">
-                    <p class="font-flash-message">
-                        Atualizado com Sucesso
-                    </p>
-                    <span class="font-css text-center">
-                        <?php
-                        echo $_SESSION['atualizado_sucesso'];
-                        unset($_SESSION['atualizado_sucesso']);
-                        ?>
-                    </span>
-                </div>
-
-                <div class="d-flex flex-row justify-content-center col-sm-7 mt-4">
-                    <button type="submit" class="btn btn-danger col-sm-6" data-bs-dismiss="alert" aria-label="Close">Fechar</button>
-                </div>
-
-            </div>
-        </div>
-
-    <?php
-    }
-    ?>
-
-    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-css modal-dialog-css-success border-warning p-3" id="modal-warning">
-            <div class="d-flex flex-row justify-content-end col-sm-12">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-content modal-content-css border-0 bg-transparent">
-                <div class="modal-header modal-header-css border-0">
-                    <h1 class="modal-title fs-5 font-css" id="exampleModalLabel"> Total de visitas para hoje: <strong><?php echo count($resultadosHoje) ?></strong> </h1>
-                </div>
-                <div class="modal-body modal-body-css">
-                    <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
-                        <table class="d-flex align-items-center table-css flex-column col-sm-12">
-                            <thead class="">
-                                <tr class="thead-designer">
-                                    <th class="th-designer" scope="col">Nome</th>
-                                    <th class="th-designer" scope="col">Empresa </th>
-                                    <th class="th-designer" scope="col">Area da Visita</th>
-                                    <th class="th-designer" scope="col">Data da Visita</th>
-                                </tr>
-                            </thead>
-                            <?php
-
-                            foreach ($resultadosHoje as $Hoje) {
-                            ?>
-                                <tbody>
-                                    <tr class="listagem-back-blue mb-4 bg-warning " id="cursor">
-                                        <td class="listagem-front-white font-css border-warning" id="">
-                                            <span class="table-designer ">
-                                                <a href="solicitacaoIndex.php?id=<?= $Hoje['id'] ?>" class="font-id-css ">
-                                                    <?= $Hoje['nome'] ?>
-                                                </a>
-                                            </span>
-                                            <span class="table-designer"><?= $Hoje['empresa']; ?></span>
-                                            <span class="table-designer"><?= $Hoje['area_da_visita']; ?></span>
-                                            <span class="table-designer"><?= date('d/m/Y - H:i', strtotime($Hoje['periodo_visita_de'])) ?></span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-                            <?php   } ?>
-
-
-                        </table>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-danger col-sm-3" data-bs-dismiss="modal">Fechar</button>
-                </div>
+            <div class="d-flex flex-row justify-content-around col-sm-7 mt-4">
+                <button type="submit" class="btn btn-danger col-sm-5" data-bs-dismiss="alert" aria-label="Close">Cancelar</button>
+                <form action="../DB_Querys/solicitacaoDelete.php" method="GET" class="col-sm-5">
+                    <input type="submit" value="Apagar" name="id_aprovado" class="col-sm-12  btn btn-success">
+                </form>
             </div>
         </div>
     </div>
 
-    <script src="../Js/main.js" crossorigin="anonymous"></script>
-    <script src="../Js/dataTable.js" crossorigin="anonymous"></script>
+<?php
+}
+?>
+
+<?php
+if (isset($_SESSION['deletar_Visitas'])) {
+
+?>
+    <div class="alert position-absolute flash-message">
+
+        <div class="flash-message-child p-4">
+            <i class="fa-solid fa-circle-exclamation fa-shake " style="color: #fb1313; font-size: 5rem;"></i>
+
+            <div class="d-flex flex-column justify-content-between align-items-center mt-4">
+                <p class="font-flash-message">
+                    Tem certeza?
+                </p>
+                <span class="font-css">
+                    <?php
+
+                    echo $_SESSION['deletar_Visitas'];
+
+                    unset($_SESSION['deletar_Visitas']);
+                    ?>
+                </span>
+            </div>
+
+            <div class="d-flex flex-row justify-content-around col-sm-7 mt-4">
+                <button type="submit" class="btn btn-danger col-sm-5" data-bs-dismiss="alert" aria-label="Close">Cancelar</button>
+                <form action="../DB_Querys/solicitacaoDelete.php" method="GET" class="col-sm-5">
+                    <input type="submit" value="Apagar" name="excluir_Registro" class="col-sm-12  btn btn-success">
+                </form>
+            </div>
+        </div>
+    </div>
+
+<?php
+}
+?>
+
+
+
+<?php
+if (isset($_SESSION['deletado'])) {
+?>
+    <div class="alert position-absolute flash-message">
+        <div class="flash-message-child p-4">
+            <i class="fa-solid fa-circle-check" style="color: #08d415; font-size: 5rem;"></i>
+
+            <div class="d-flex flex-column justify-content-between align-items-center mt-4">
+                <p class="font-flash-message">
+                    Deletado
+                </p>
+                <span class="font-css">
+                    <?php
+                    echo $_SESSION['deletado'];
+                    unset($_SESSION['deletado']);
+                    ?>
+                </span>
+            </div>
+
+            <div class="d-flex flex-row justify-content-around col-sm-7 mt-4">
+                <button type="submit" class="btn btn-danger col-sm-5" data-bs-dismiss="alert" aria-label="Close">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+<?php
+}
+?>
+
+
+<?php
+if (isset($_SESSION['atualizado_sucesso'])) {
+?>
+    <div class="alert position-absolute flash-message">
+        <div class="flash-message-child p-4">
+
+            <i class="fa-solid fa-circle-check" style="color: #08d415; font-size: 5rem;"></i>
+
+            <div class="d-flex flex-column justify-content-between align-items-center mt-4">
+                <p class="font-flash-message">
+                    Atualizado com Sucesso
+                </p>
+                <span class="font-css text-center">
+                    <?php
+                    echo $_SESSION['atualizado_sucesso'];
+                    unset($_SESSION['atualizado_sucesso']);
+                    ?>
+                </span>
+            </div>
+
+            <div class="d-flex flex-row justify-content-center col-sm-7 mt-4">
+                <button type="submit" class="btn btn-danger col-sm-6" data-bs-dismiss="alert" aria-label="Close">Fechar</button>
+            </div>
+
+        </div>
+    </div>
+
+<?php
+}
+?>
+
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-css modal-dialog-css-success border-warning p-3" id="modal-warning">
+        <div class="d-flex flex-row justify-content-end col-sm-12">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-content modal-content-css border-0 bg-transparent">
+            <div class="modal-header modal-header-css border-0">
+                <h1 class="modal-title fs-5 font-css" id="exampleModalLabel"> Total de visitas para hoje: <strong><?php echo count($resultadosHoje) ?></strong> </h1>
+            </div>
+            <div class="modal-body modal-body-css">
+                <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
+                    <table class="d-flex align-items-center table-css flex-column col-sm-12">
+                        <thead class="thead-designer-front">
+                            <tr class="thead-designer p-3 font-css-dark">
+                                <th class="th-designer" scope="col">Nome</th>
+                                <th class="th-designer" scope="col">Empresa </th>
+                                <th class="th-designer" scope="col">Area da Visita</th>
+                                <th class="th-designer" scope="col">Data da Visita</th>
+                            </tr>
+                        </thead>
+                        <?php
+
+                        foreach ($resultadosHoje as $Hoje) {
+                        ?>
+                            <tbody>
+                                <tr class="listagem-back-blue mb-4 bg-warning " id="cursor">
+                                    <td class="listagem-front-white p-3 font-css border-warning" id="">
+                                        <span class="table-designer ">
+                                            <a href="solicitacaoIndex.php?id=<?= $Hoje['id'] ?>" class="font-id-css ">
+                                                <?= $Hoje['nome'] ?>
+                                            </a>
+                                        </span>
+                                        <span class="table-designer"><?= $Hoje['empresa']; ?></span>
+                                        <span class="table-designer"><?= $Hoje['area_da_visita']; ?></span>
+                                        <span class="table-designer"><?= date('d/m/Y - H:i', strtotime($Hoje['periodo_visita_de'])) ?></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        <?php   } ?>
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-danger col-sm-3" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../Js/main.js" crossorigin="anonymous"></script>

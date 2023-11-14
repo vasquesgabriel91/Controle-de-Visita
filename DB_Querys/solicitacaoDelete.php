@@ -64,27 +64,6 @@ if (isset($_GET['id_aprovado'])) {
         exit;
     }
 }
-// function deleteAprovado($dbDB)
-// {
-//     if (isset($_GET['id_aprovado'])) {
-//         $id_a_excluir = $_SESSION['id_a_excluir'];
-
-//         // Exclua o registro da tabela "aprovacao"
-//         $delete_aprovacao = $dbDB->prepare("DELETE FROM aprovacao WHERE id_visitante = :id_visitante");
-//         $delete_aprovacao->bindValue(':id_visitante', $id_a_excluir, PDO::PARAM_INT);
-
-//         if ($delete_aprovacao->execute()) {
-//             // Exclua o registro da tabela "Visitante"
-//             $delete_visitante = $dbDB->prepare("DELETE FROM Visitante WHERE id = :id");
-//             $delete_visitante->bindValue(':id', $id_a_excluir, PDO::PARAM_INT);
-//             $delete_visitante->execute();
-//             $_SESSION['deletado'] = "Visita foi deletada com sucesso";
-//             header("Location: ../View/home.php");
-//             return true;
-//         }
-//     }
-// }
-
 
 if (isset($_GET['excluir_Registro'])) {
     $id = $_SESSION['excluir'];

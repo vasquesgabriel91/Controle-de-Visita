@@ -66,6 +66,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <div class=" d-flex flex-row align-items-end justify-content-end col-sm-1">
                         <input class="btn btn-success  col-sm-12" type="submit" value="Enviar" id="btn-enviar" disabled>
                     </div>
+                    <select name="motivo_visita" id="motivo_visita" class="d-none" >
+                        <option value="Entrevista">Entrevista</option>
+                    </select>
+                        
                 </div>
             </form>
         </div>
@@ -127,7 +131,7 @@ if (isset($_SESSION['sucesso'])) {
                             <tbody>
                                 <tr class="listagem-back-blue mb-4">
                                     <td class="listagem-front-white font-css ">
-                                        <span class="table-designer ">
+                                        <span class="table-designer p-3">
                                             <?php echo $registros['nome']; ?>
                                         </span>
                                         <span class="table-designer">
@@ -137,7 +141,7 @@ if (isset($_SESSION['sucesso'])) {
                                             <?php echo $registros['email']; ?>
                                         </span>
                                         <span class="table-designer">
-                                            <?php echo date('d/m/Y - H:i', strtotime($registros['data_entrevista'])) ?>
+                                            <?php echo date('d/m/Y - H:i', strtotime($registros['periodo_visita_de'])) ?>
                                         </span>
                                     </td>
                                 </tr>
