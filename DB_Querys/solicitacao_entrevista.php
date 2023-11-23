@@ -36,8 +36,6 @@ function inserirSolicitacao($dbDB, $nome, $celular, $email, $data_entrevista, $m
     $inserir->bindParam(':motivo_visita', $motivo_visita);
     $inserir->bindParam(':identificador', $identificador);
 
-
-
     if ($inserir->execute()) {
         $id_usuario = $_SESSION["id"];
         $id = $dbDB->lastInsertId();

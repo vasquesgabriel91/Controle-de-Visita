@@ -87,3 +87,6 @@
     border: 0;
     border-radius: .3em;   
 }
+.hidden{
+    display:none;
+}

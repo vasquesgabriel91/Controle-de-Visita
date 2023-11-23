@@ -35,7 +35,7 @@ function addInput_e_RemoverIput() {
     inputNome.type = "text";
     inputNome.name = "nome[]";
     inputNome.value = nome;
-    inputNome.className = "input-css m-2";
+    inputNome.className = "input-css ";
 
     const inputCelular = document.createElement("input");
     inputCelular.type = "text";
@@ -47,7 +47,7 @@ function addInput_e_RemoverIput() {
     inputEmail.type = "text";
     inputEmail.name = "email[]";
     inputEmail.value = email;
-    inputEmail.className = "input-css m-2";
+    inputEmail.className = "input-css ";
 
     const inputPeriodoVisita = document.createElement("input");
     inputPeriodoVisita.type = "datetime-local";

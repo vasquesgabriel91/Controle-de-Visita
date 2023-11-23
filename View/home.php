@@ -59,7 +59,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
     <div class="d-flex flex-column align-items-center justify-content-center mt-5 col-sm-12">
         <table class="d-flex align-items-center table-css flex-column col-sm-12 table-fixed">
             <thead class="thead-designer-front">
-                <tr class="thead-designer p-3 font-css-dark  ">
+                <tr class="thead-designer p-3 font-css-dark">
                     <th class="th-designer">Nome</th>
                     <th class="th-designer">Empresa </th>
                     <th class="th-designer">Celular</th>
@@ -86,7 +86,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
                             // Verificar se o usuário tem permissão de acesso à seção, Se o usuário for diretor ou gestor, eles têm permissão de acesso
                             if (!isset($acesso)) { ?>
                                 <span class="table-designer">
-                                    <a href=""><?= $resultados['nome']; ?></a>
+                                    <a href=""><?= $resultados['visitante']; ?></a>
                                 </span>
                                 <span class="table-designer">
                                     <a href=""><?= $resultados['empresa']; ?></a>
@@ -97,7 +97,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
                             <?php
                             } else { ?>
                                 <span class="table-designer">
-                                    <a href="solicitacaoIndex.php?id=<?= $resultados['id'] ?>" class="font-id-css"><?= $resultados['nome'] ?></a>
+                                    <a href="solicitacaoIndex.php?id=<?= $resultados['id'] ?>" class="font-id-css"><?= $resultados['visitante'] ?></a>
                                 </span>
                                 <span class="table-designer">
                                     <?= $resultados['empresa']; ?>
