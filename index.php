@@ -1,20 +1,17 @@
 <?php
+// Chamar o método para carregar as variáveis de ambiente
 require_once './BD_Conncetion/connection.php';
 require_once './Toten_Token/View/Side_Bar_Toten.php';
-
 
 $hoje = date('Y-m-d'); // Formato: Ano-Mês-Dia
 $visitas_Hoje = $dbDB->prepare("SELECT * FROM Visitante WHERE CONVERT(DATE, periodo_visita_de) = :hoje ORDER BY id");
 $visitas_Hoje->bindValue(':hoje', $hoje, PDO::PARAM_STR);
 $visitas_Hoje->execute();
 $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
-
 
 <body class=" d-flex flex-row">
     <div class=" d-flex flex-column col">
-
         <div class="d-flex justify-content-center mt-5">
             <div class="d-flex justify-content-start text-dark col-sm-10 justify-content-between align-items-center ">
                 <span class="titulo">
@@ -35,9 +32,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="col-sm-12  d-flex justify-content-center mt-5">
             <div class="d-flex flex-column col-sm-12 d-flex justify-content-center align-items-center">
-
                 <span class="titulo"> Digite seu CPF para confirmar sua visita</span>
-
                 <div class="d-flex align-items-center justify-content-center mt-5 col-sm-12">
                     <div class="col-sm-10 align-items-center justify-content-center">
                         <form action="" method="post" class="col-sm-11 mt-5">

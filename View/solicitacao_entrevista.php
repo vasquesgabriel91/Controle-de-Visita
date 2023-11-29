@@ -39,7 +39,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                     <label class="label-css" for="celular">Celular:</label>
                     <input type="text" id="celular" class="input-css" placeholder="Celular">
+
+                    <label class="label-css" for="cpf">CPF:</label>
+                    <input type="text" id="cpf" class="input-css" placeholder="CPF">
                 </div>
+
                 <div class="d-flex flex-column col-sm-5">
                     <label class="label-css" for="email">Email:</label>
                     <input type="email" id="email" class="input-css" placeholder="Email">
@@ -57,23 +61,22 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <div class="bg-form-css d-flex col-sm-10 ">
             <form action="../DB_Querys/solicitacao_entrevista.php" method="POST" class=" d-flex col-sm-12 justify-content-between ">
                 <div class="d-flex flex-row justify-content-around p-3 col-sm-12">
-                    <div class="d-flex flex-column col-sm-4" id="myForm"></div>
+                    <div class="d-flex flex-row bg-info col-sm-10">
+                        <div class="d-flex flex-column col-sm-6" id="myForm"></div>
 
-                    <div class="d-flex flex-column col-sm-4" id="myForm2"></div>
-
+                        <div class="d-flex flex-column col-sm-6" id="myForm2"></div>
+                    </div>
                     <div class=" d-flex align-items-center justify-content-around flex-column " id="remove-btn"></div>
 
                     <div class=" d-flex flex-row align-items-end justify-content-end col-sm-1">
                         <input class="btn btn-success  col-sm-12" type="submit" value="Enviar" id="btn-enviar" disabled>
                     </div>
-                    <select name="motivo_visita" id="motivo_visita" class="d-none" >
+                    <select name="motivo_visita" id="motivo_visita" class="d-none">
                         <option value="Entrevista">Entrevista</option>
                     </select>
-                        
                 </div>
             </form>
         </div>
-
     </div>
 </div>
 
@@ -108,7 +111,7 @@ if (isset($_SESSION['sucesso'])) {
 ?>
 
 <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-aprov p-3" >
+    <div class="modal-dialog modal-dialog-aprov p-3">
         <div class="d-flex flex-row justify-content-end col-sm-12">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -150,7 +153,7 @@ if (isset($_SESSION['sucesso'])) {
 
                         <?php } ?>
                     </table>
-                    
+
                 </div>
             </div>
             <div class="d-flex justify-content-end">

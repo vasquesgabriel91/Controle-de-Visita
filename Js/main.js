@@ -2,6 +2,7 @@ function addInput_e_RemoverIput() {
 
   const nome = document.getElementById("nome").value;
   const celular = document.getElementById("celular").value;
+  const cpf = document.getElementById("cpf").value;
   const email = document.getElementById("email").value;
   const periodo_visita_de = document.getElementById("periodo_visita_de").value;
 
@@ -12,8 +13,8 @@ function addInput_e_RemoverIput() {
     alert("Preencha o nome e a data da entrevista antes de adicionar.");
 
     return; // Não continue se algum campo estiver vazio
-    
-  }else{
+
+  } else {
 
     const labelName = document.createElement("label");
     labelName.className = "label-css";
@@ -23,6 +24,10 @@ function addInput_e_RemoverIput() {
     labelCelular.className = "label-css";
     labelCelular.innerHTML = "Celular:";
 
+    const labelCpf = document.createElement("label");
+    labelCpf.className = "label-css";
+    labelCpf.innerHTML = "CPF:";
+
     const labelEmail = document.createElement("label");
     labelEmail.className = "label-css";
     labelEmail.innerHTML = "Email:";
@@ -30,6 +35,10 @@ function addInput_e_RemoverIput() {
     const labelPeriodoVisita = document.createElement("label");
     labelPeriodoVisita.className = "label-css ";
     labelPeriodoVisita.innerHTML = "Data da entrevista:";
+
+    const labelHidden = document.createElement("label");
+    labelHidden.className = "label-css ";
+    labelHidden.innerHTML = "";
 
     const inputNome = document.createElement("input");
     inputNome.type = "text";
@@ -41,7 +50,18 @@ function addInput_e_RemoverIput() {
     inputCelular.type = "text";
     inputCelular.name = "celular[]";
     inputCelular.value = celular;
-    inputCelular.className = "input-css mb-4";
+    inputCelular.className = "input-css"; 
+
+    
+    const inputCpf = document.createElement("input");
+    inputCpf.type = "text";
+    inputCpf.name = "cpf[]";
+    inputCpf.value = cpf;
+    inputCpf.className = "input-css mb-4";
+
+    const inputHidden = document.createElement("input");
+    inputHidden.type = "text";
+    inputHidden.className = "input-css mb-4 border-0 bg-transparent";
 
     const inputEmail = document.createElement("input");
     inputEmail.type = "text";
@@ -53,7 +73,8 @@ function addInput_e_RemoverIput() {
     inputPeriodoVisita.type = "datetime-local";
     inputPeriodoVisita.name = "periodo_visita_de[]";
     inputPeriodoVisita.value = periodo_visita_de;
-    inputPeriodoVisita.className = "input-css mb-4";
+    inputPeriodoVisita.className = "input-css ";
+    inputPeriodoVisita.id = "inputdata"
 
     enviar.disabled = false;
 
@@ -61,12 +82,22 @@ function addInput_e_RemoverIput() {
     myForm.appendChild(inputNome);
     myForm.appendChild(labelCelular);
     myForm.appendChild(inputCelular);
+    myForm.appendChild(labelCpf);
+    myForm.appendChild(inputCpf);
 
     myForm2.appendChild(labelEmail);
     myForm2.appendChild(inputEmail);
     myForm2.appendChild(labelPeriodoVisita);
     myForm2.appendChild(inputPeriodoVisita);
-    
+    myForm2.appendChild(labelHidden);
+    myForm2.appendChild(inputHidden);
+  
+   
+    document.getElementById("nome").value = "";
+    document.getElementById("celular").value = "";
+    document.getElementById("cpf").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("periodo_visita_de").value = "";
 
     // btn remover
     const removeButton = document.createElement("div");
@@ -80,23 +111,27 @@ function addInput_e_RemoverIput() {
 
       myForm.removeChild(labelName);
       myForm.removeChild(labelCelular);
+      myForm.removeChild(labelCpf);
       myForm2.removeChild(labelEmail);
       myForm2.removeChild(labelPeriodoVisita);
 
       myForm.removeChild(inputNome);
       myForm.removeChild(inputCelular);
+      myForm.removeChild(inputCpf);
       myForm2.removeChild(inputEmail);
       myForm2.removeChild(inputPeriodoVisita);
+      myForm2.removeChild(inputHidden);
+
       removeBtnContainer.removeChild(removeButton);
 
       // Verificar se há elementos no formulário
-    const formElements = myForm.querySelectorAll("input, label");
-    const form2Elements = myForm2.querySelectorAll("input, label");
+      const formElements = myForm.querySelectorAll("input, label");
+      const form2Elements = myForm2.querySelectorAll("input, label");
 
-    //Desabilitar o botão de envio
-    if (formElements.length === 0 && form2Elements.length === 0) {
-      enviar.disabled = true;
-    }
+      //Desabilitar o botão de envio
+      if (formElements.length === 0 && form2Elements.length === 0) {
+        enviar.disabled = true;
+      }
 
     });
   }

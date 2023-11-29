@@ -2,7 +2,7 @@
 include_once('../BD_Conncetion/connection.php'); 
 // require_once '../vendor/autoload.php'; // Carrega as dependências do Composer
 
-// $client = new \GuzzleHttp\Client();
+// $client = new GuzzleHttp\Client();
 
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: ../View/login.php");

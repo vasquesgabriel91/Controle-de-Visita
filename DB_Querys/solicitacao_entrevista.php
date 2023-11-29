@@ -5,6 +5,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: ../View/login.php");
     exit;
 }
+
 function identificador($dbDB)
 {
     $identificador = rand(1, 1000);
@@ -25,11 +26,12 @@ function identificador($dbDB)
     return $identificador;
 }
 
-function inserirSolicitacao($dbDB, $nome, $celular, $email, $data_entrevista, $motivo_visita, $identificador)
+function inserirSolicitacao($dbDB, $nome, $celular, $cpf, $email, $data_entrevista, $motivo_visita, $identificador)
 {
-    $inserir = $dbDB->prepare("INSERT INTO Visitante (nome, celular, email, periodo_visita_de, motivo_visita ,identificador) VALUES (:nome, :celular, :email, :periodo_visita_de, :motivo_visita, :identificador)");
+    $inserir = $dbDB->prepare("INSERT INTO Visitante (nome, celular,cpf, email, periodo_visita_de, motivo_visita ,identificador) VALUES (:nome, :celular, :cpf, :email, :periodo_visita_de, :motivo_visita, :identificador)");
     $inserir->bindParam(':nome', $nome);
     $inserir->bindParam(':celular', $celular);
+    $inserir->bindParam(':cpf', $cpf);
     $inserir->bindParam(':email', $email);
     $data_entrevista = date('Y-m-d H:i:s', strtotime($data_entrevista));
     $inserir->bindParam(':periodo_visita_de', $data_entrevista);
@@ -52,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     for ($i = 0; $i < count($_POST['nome']); $i++) {
         $nome = $_POST['nome'][$i];
         $celular = $_POST['celular'][$i];
+        $cpf = $_POST['cpf'][$i];
         $email = $_POST['email'][$i];
         $data_entrevista = $_POST['periodo_visita_de'][$i];
         $motivo_visita = $_POST["motivo_visita"];
@@ -59,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Chame a função para inserir os dados.
         $identificador = identificador($dbDB);
 
-        inserirSolicitacao($dbDB, $nome, $celular, $email, $data_entrevista, $motivo_visita, $identificador);
+        inserirSolicitacao($dbDB, $nome, $celular, $cpf, $email, $data_entrevista, $motivo_visita, $identificador);
     }
 }
 function readSolicitacaoEntrevista($dbDB)

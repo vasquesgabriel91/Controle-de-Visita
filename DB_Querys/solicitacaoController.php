@@ -55,10 +55,7 @@ function validaCPF($cpf)
             return false;
         }
     }
-
     return true;
-    // Faz o cálculo para validar o CPF
-
 }
 
 function inserirVisita($dbDB, $nome, $cpf, $celular, $email, $periodo_visita_de, $periodo_visita_ate, $empresa, $visitante, $area_da_visita, $integracao, $acesso_fabrica, $carro_oficina, $carro_cliente, $datawake, $observacao, $motivo_visita, $identificador)
