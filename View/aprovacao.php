@@ -73,7 +73,7 @@ $ids_aprovados = $count_aprovado->fetchAll(PDO::FETCH_COLUMN);
                                 </a>
                             </span>
                             <span class="table-designer"><?= $resultados['empresa']; ?></span>
-                            <span class="table-designer"><?= $resultados['area_da_visita']; ?></span>
+                            <span class="table-designer d-flex text-center"><?= $resultados['area_da_visita']; ?></span>
                             <span class="table-designer"><?= date('d/m/Y - H:i', strtotime($resultados['periodo_visita_de'])) ?></span>
 
                             <form action="../DB_Querys/aprovacao.php" method="POST" class="d-flex w-form">

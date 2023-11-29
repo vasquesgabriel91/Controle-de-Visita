@@ -1,10 +1,11 @@
 <?php
 include_once('../BD_Conncetion/connection.php');
 
-
 if (isset($_GET['id'])) {
     $id = (int)$_GET['id'];
-
+    deletarVisita($id, $dbDB);
+}
+function deletarVisita($id, $dbDB) {
     $verdica_Registro = $dbDB->prepare("SELECT * FROM Registro_da_Visita WHERE id_Visitante = :id ");
     $verdica_Registro->bindValue(':id', $id, PDO::PARAM_STR);
     $verdica_Registro->execute();
@@ -49,8 +50,10 @@ if (isset($_GET['id'])) {
 
 if (isset($_GET['id_aprovado'])) {
     $id_a_excluir = $_SESSION['id_a_excluir'];
+    deletarVisitasAprovadas($id_a_excluir, $dbDB);
+}
 
-    // Exclua o registro da tabela "aprovacao"
+function deletarVisitasAprovadas($id_a_excluir, $dbDB){
     $delete_aprovacao = $dbDB->prepare("DELETE FROM aprovacao WHERE id_visitante = :id_visitante");
     $delete_aprovacao->bindValue(':id_visitante', $id_a_excluir, PDO::PARAM_INT);
 
@@ -63,7 +66,11 @@ if (isset($_GET['id_aprovado'])) {
         header("Location: ../View/home.php");
         exit;
     }
+
 }
+
+    // Exclua o registro da tabela "aprovacao"
+
 
 if (isset($_GET['excluir_Registro'])) {
     $id = $_SESSION['excluir'];
@@ -87,3 +94,30 @@ if (isset($_GET['excluir_Registro'])) {
         exit;
     }
 }
+
+// if(isset($_GET['excluir_Regitro'])){
+//     $id_excluir_Regitro = $_SESSION['excluir'];
+//     deletarVisitasRegistradas($id_excluir_Regitro, $dbDB);
+// }
+
+// function deletarVisitasRegistradas($id_excluir_Regitro, $dbDB){
+//     $delete_registro = $dbDB->prepare("DELETE FROM Registro_da_Visita WHERE id_Visitante = :id_visitante");
+//     $delete_registro->bindValue(':id_visitante', $id_excluir_Regitro, PDO::PARAM_INT);
+
+//     if ($delete_registro->execute()) {
+//             // Exclua o registro da tabela "aprovacao"
+//         $delete_aprovacao = $dbDB->prepare("DELETE FROM aprovacao WHERE id_visitante = :id_visitante");
+//         $delete_aprovacao->bindValue(':id_visitante', $id_excluir_Regitro, PDO::PARAM_INT);
+//         $delete_aprovacao->execute();
+
+//         // Exclua o registro da tabela "Visitante"
+//         $delete_visitante = $dbDB->prepare("DELETE FROM Visitante WHERE id = :id");
+//         $delete_visitante->bindValue(':id', $id_excluir_Regitro, PDO::PARAM_INT);
+//         $delete_visitante->execute();
+
+//         $_SESSION['deletado'] = "Visita foi deletada com sucesso";
+//         header("Location: ../View/home.php");
+//         exit;
+//     }
+
+// }

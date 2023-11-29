@@ -77,7 +77,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
                                         <?php foreach ($id_consulta_token as $consulta) { ?>
                                             <tr class="listagem-back-blue mb-4">
                                                 <td class="listagem-front-white p-3 font-css">
-                                                    <span class="table-designer"><?= $consulta['nome']; ?></span>
+                                                    <span class="table-designer"><?= $consulta['visitante']; ?></span>
                                                     <span class="table-designer"><?= $consulta['empresa']; ?></span>
                                                     <span class="table-designer"><?= $consulta['celular']; ?></span>
                                                     <span class="table-designer">
