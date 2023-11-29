@@ -21,7 +21,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <input type="text" placeholder="Nome completo" id="visitante" class="input-css" name="visitante" required>
 
                         <label class="label-css" for="cpf">CPF do visitante:</label>
-                        <input type="text" placeholder="Nome completo" id="cpf" required class="input-css" minlength="11" maxlength="11" name="cpf" required>
+                        <input type="text" placeholder="Nome completo" id="cpf" class="input-css" minlength="11" maxlength="11" name="cpf" required>
                         <div id="resultado"></div>
 
 

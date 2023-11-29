@@ -41,7 +41,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <input type="text" id="celular" class="input-css" placeholder="Celular">
 
                     <label class="label-css" for="cpf">CPF:</label>
-                    <input type="text" id="cpf" class="input-css" placeholder="CPF">
+                    <input type="text" id="cpf" class="input-css" placeholder="CPF" minlength="11" maxlength="11" required>
+                    <div id="resultado_Div_Entrevista"></div>
                 </div>
 
                 <div class="d-flex flex-column col-sm-5">
@@ -61,7 +62,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <div class="bg-form-css d-flex col-sm-10 ">
             <form action="../DB_Querys/solicitacao_entrevista.php" method="POST" class=" d-flex col-sm-12 justify-content-between ">
                 <div class="d-flex flex-row justify-content-around p-3 col-sm-12">
-                    <div class="d-flex flex-row bg-info col-sm-10">
+                    <div class="d-flex flex-row col-sm-10">
                         <div class="d-flex flex-column col-sm-6" id="myForm"></div>
 
                         <div class="d-flex flex-column col-sm-6" id="myForm2"></div>
