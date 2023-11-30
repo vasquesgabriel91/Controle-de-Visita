@@ -17,16 +17,18 @@ $email_login = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+
     $emailErro = "Por favor, coloque um email válido";
     $email = ($_POST["email"]);
 
     $senhaErro = "Por favor, insira uma senha";
     $senha = ($_POST["senha"]);
 
-    login($dbDB, $emailErro, $email, $senhaErro, $senha);
+    login($dbDB, $email, $senha);
 }
 
-function login($dbDB, $emailErro, $email, $senhaErro, $senha) {
+function login($dbDB, $email, $senha){
+    global $senhaErro, $emailErro, $email_login, $usuarioExiste;
     if (empty(trim($email))) {
         $emailErro = "Por favor, coloque um email válido";
     }
@@ -35,7 +37,7 @@ function login($dbDB, $emailErro, $email, $senhaErro, $senha) {
         $senhaErro = "Por favor, insira uma senha";
     }
 
-    if (empty($emailErro) && empty($senhaErro)) {
+    if (!empty($email) && !empty($senha)) {
         // Verifica se o email já existe no banco de dados
         $verificarUser = $dbDB->prepare("SELECT * FROM usuarios WHERE email = :email");
         $verificarUser->bindParam(':email', $email);
@@ -63,3 +65,4 @@ function login($dbDB, $emailErro, $email, $senhaErro, $senha) {
         }
     }
 }
+?>

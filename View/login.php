@@ -37,7 +37,7 @@ include_once('../DB_Querys/loginController.php');
                        <h4 class="text-decoration-underline"> <a href="cadastro.php" class="font-link-css">Criar Conta</a></h4>
                        <h4 class="text-decoration-underline"> <a href="RedefinirSenha.php" class="font-link-css" >Esqueceu a senha?</a></h4>
 
-                        <button type="submit" class="login-button <?php echo (!empty($usuarioExiste)) ? 'is-invalid' : ''; ?>" value="<?php echo $usuarioExiste; ?>">Enviar</button>
+                        <button type="submit" class="login-button <?php echo (isset($usuarioExiste)) ? 'is-invalid' : ''; ?>" value="<?php echo $usuarioExiste; ?>">Enviar</button>
                         <span class="invalid-feedback"><?php echo $usuarioExiste; ?></span>
                     </form>
                    
