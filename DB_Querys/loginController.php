@@ -18,10 +18,10 @@ $email_login = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
-    $emailErro = "Por favor, coloque um email válido";
+    $emailErro = "";
     $email = ($_POST["email"]);
 
-    $senhaErro = "Por favor, insira uma senha";
+    $senhaErro = "";
     $senha = ($_POST["senha"]);
 
     login($dbDB, $email, $senha);
