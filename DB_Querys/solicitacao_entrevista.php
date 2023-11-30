@@ -73,6 +73,15 @@ function readSolicitacaoEntrevista($dbDB)
 
     return $query;
 }
+function readEntrevistasAprovadas($dbDB)
+{
+    $query = $dbDB->prepare("SELECT Visitante.* FROM aprovacao 
+    JOIN Visitante ON aprovacao.id_visitante = Visitante.id WHERE Visitante.motivo_visita = 'Entrevista' ORDER BY id ASC ");
+    $query->execute();
+    $EntrevistasAprovadas = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    return $EntrevistasAprovadas;
+}
 
 function paginacao($dbDB, $paginaAtual = 1, $limite = 5)
 {

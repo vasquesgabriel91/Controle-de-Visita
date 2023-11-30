@@ -136,7 +136,9 @@ if (isset($_SESSION['sucesso'])) {
                                 <tr class="listagem-back-blue mb-4">
                                     <td class="listagem-front-white font-css ">
                                         <span class="table-designer p-3">
-                                            <?php echo $registros['nome']; ?>
+                                            <a href="solicitacaoEntrevistaIndex.php?id=<?= $registros['id'] ?>" class="font-id-css ">
+                                                <?= $registros['nome'] ?>
+                                            </a>
                                         </span>
                                         <span class="table-designer">
                                             <?php echo $registros['celular'] ?>

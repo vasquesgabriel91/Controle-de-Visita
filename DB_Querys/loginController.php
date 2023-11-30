@@ -13,19 +13,26 @@ $senha = "";
 $senhaErro = "";
 $emailErro = "";
 $usuarioExiste = "";
+$email_login = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    if (empty(trim($_POST["email"]))) {
+    $emailErro = "Por favor, coloque um email válido";
+    $email = ($_POST["email"]);
+
+    $senhaErro = "Por favor, insira uma senha";
+    $senha = ($_POST["senha"]);
+
+    login($dbDB, $emailErro, $email, $senhaErro, $senha);
+}
+
+function login($dbDB, $emailErro, $email, $senhaErro, $senha) {
+    if (empty(trim($email))) {
         $emailErro = "Por favor, coloque um email válido";
-    } else {
-        $email = trim($_POST["email"]);
     }
 
-    if (empty(trim($_POST["senha"]))) {
+    if (empty(trim($senha))) {
         $senhaErro = "Por favor, insira uma senha";
-    } else {
-        $senha = trim($_POST["senha"]);
     }
 
     if (empty($emailErro) && empty($senhaErro)) {
@@ -39,15 +46,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email_login = $resultado['email'];
             $senha_hash_login = $resultado['senha'];
             if (password_verify($senha, $senha_hash_login)) {
-
                 session_start();
                 $_SESSION["loggedin"] = true;
                 $_SESSION["id"] = $resultado['id'];
                 $_SESSION["email"] = $email;
-                $_SESSION["cargoid"] = $resultado['cargoid']; //SERÁ ENVIADA PARA SIDE_BAR_HOMECONTROLLER
+                $_SESSION["cargoid"] = $resultado['cargoid'];
                 $_SESSION["celular"] = $resultado['celular'];
                 $_SESSION["nome"] = $resultado['nome'];
-
                 header("location: home.php");
                 exit;
             } else {

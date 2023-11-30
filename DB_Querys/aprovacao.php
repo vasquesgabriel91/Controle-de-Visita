@@ -15,12 +15,15 @@ $aprovado = "";
 $aprovacaoErro = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
     $id_usuario = $_SESSION["id"];
     $resultados =  $_POST["id_visitante"];
     $aprovado = $_POST["aprovado"];
+    $aprovacaoErro = "";
+    aprovacao($dbDB, $id_usuario, $resultados, $aprovado,$aprovacaoErro);
+}
 
-    // Faz um count para conferir se o id visitante ja está cadastrado e se sim não pode aprovar novamente 
+
+ function aprovacao( $dbDB, $id_usuario, $resultados, $aprovado, $aprovacaoErro){
     $count_id_visitante = $dbDB->prepare("SELECT COUNT(id_visitante) AS count FROM aprovacao WHERE id_visitante = :resultados");
     $count_id_visitante->bindParam(':resultados', $resultados); 
     $count_id_visitante->execute();
@@ -89,9 +92,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         }
                 }
         }
-    }
-        
-        
+    }       
+ }
+
+
+function readVisitasAprovadas($dbDB)
+{
+    $query = $dbDB->prepare("SELECT Visitante.* FROM aprovacao 
+    JOIN Visitante ON aprovacao.id_visitante = Visitante.id WHERE Visitante.motivo_visita = 'Visita' OR Visitante.motivo_visita = 'Prestador de serviço' ORDER BY id ASC ");
+    $query->execute();
+    $VisitasAprovadas = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    return $VisitasAprovadas;
+ 
 }
+
+function readVisitasPendentes($dbDB)
+{
+    $query = $dbDB->prepare("SELECT Visitante.* FROM Visitante LEFT JOIN aprovacao 
+    ON Visitante.id = aprovacao.id_visitante WHERE aprovacao.id_visitante IS NULL");
+    $query->execute();
+    $resultado = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    return $resultado;
+}
+
 
 ?>

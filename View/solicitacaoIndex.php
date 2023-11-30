@@ -15,7 +15,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="d-flex flex-column col align-items-center">
         <div class="d-flex bg-transparent border-0 mt-5 mb-5 col-sm-10">
             <h2 class="text-title-css">
-                Solicitação de Visita
+                Solicitação de visita
             </h2>
         </div>
         <div class="bg-form-css d-flex  col-sm-10 mb-5  ">
