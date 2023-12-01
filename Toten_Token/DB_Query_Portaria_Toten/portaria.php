@@ -11,6 +11,14 @@ $token = "";
 if (isset($_GET['id'])) {
     $id_Visitante = $_GET['id'];
 
+    return getVisita($dbDB, $id_Visitante);
+} else {
+    return "Nenhum resultado encontrado.";
+}
+
+
+function getVisita($dbDB, $id_Visitante)
+{
     $pesquisar = $dbDB->prepare("SELECT COUNT(id_Visitante) AS count FROM Registro_da_Visita WHERE id_Visitante = :id_Visitante");
     $pesquisar->bindParam(':id_Visitante', $id_Visitante);
     $pesquisar->execute();
@@ -22,7 +30,7 @@ if (isset($_GET['id'])) {
     } else {
         if (isset($_SESSION['token'])) {
             $token = $_SESSION['token'];
-            
+
             $verificarToken = $dbDB->prepare("SELECT id, cpf FROM Visitante WHERE id = :id_Visitante AND cpf = :cpf");
             $verificarToken->bindParam(':id_Visitante', $id_Visitante);
             $verificarToken->bindParam(':cpf', $token);
@@ -30,12 +38,9 @@ if (isset($_GET['id'])) {
             $visitante = $verificarToken->fetch(PDO::FETCH_ASSOC);
 
             if ($visitante) {
-                // O token é válido e corresponde ao visitante, agora pode inserir o registro
-                $confirmar = $dbDB->prepare("INSERT INTO Registro_da_Visita (id_Visitante) VALUES (:id_Visitante)");
-                $confirmar->bindParam(':id_Visitante', $id_Visitante);
-                $confirmar->execute();
-                $_SESSION['MensagemPortaria'] = "Nossa equipe recebeu sua solicitação e já está indo ao seu encontro";
-                header("Location: ../../../Controle-de-Visita-FullStack/index.php");
+                $id_Visitante;
+                $token;
+                return  insertInto($dbDB, $id_Visitante);
             } else {
                 $_SESSION['visita_confirmada'] = "Você está tentando confirmar uma visita que não é sua ou o token está incorreto";
                 header("Location: ../../../Controle-de-Visita-FullStack/index.php");
@@ -45,6 +50,19 @@ if (isset($_GET['id'])) {
             header("Location: ../../../Controle-de-Visita-FullStack/index.php");
         }
     }
-} else {
-    echo "Nenhum resultado encontrado.";
+}
+
+
+function insertInto($dbDB, $id_Visitante)
+{
+    if (!empty($id_Visitante)) {
+        $confirmar = $dbDB->prepare("INSERT INTO Registro_da_Visita (id_Visitante) VALUES (:id_Visitante)");
+        $confirmar->bindParam(':id_Visitante', $id_Visitante);
+        $confirmar->execute();
+        $_SESSION['MensagemPortaria'] = "Nossa equipe recebeu sua solicitação e já está indo ao seu encontro";
+        header("Location: ../../../Controle-de-Visita-FullStack/index.php");
+    } else {
+        $_SESSION['visita_confirmada'] = "Você está tentando confirmar uma visita que não é sua ou o token está incorreto";
+        header("Location: ../../../Controle-de-Visita-FullStack/index.php");
+    }
 }
