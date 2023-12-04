@@ -3,7 +3,8 @@
 
 <?php
 
-
+$paginas =  $_SESSION["paginas"];
+$resultad = paginacaoHome($dbDB, $paginaAtual = 1, $limite = 5);
 //Visitas por Data atual 
 $dia_Atual = date('d/m/Y'); // Formato: Mês/Dia/Ano
 
