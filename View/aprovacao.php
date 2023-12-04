@@ -60,12 +60,24 @@ $resultado = readVisitasPendentes($dbDB);
                     <tr class="listagem-back-blue mb-4">
                         <td class="listagem-front-white font-css" id="">
                             <span class="table-designer">
+                                <?php
+                                if ($resultados['motivo_visita'] == "Entrevista") { ?>
+                                    <a href="solicitacaoEntrevistaIndex.php?id=<?= $resultados['id'] ?>" class="font-id-css ">
+                                        <?= $resultados['nome'] ?>
+                                    </a>
+                                <?php } ?>
                                 <a href="solicitacaoIndex.php?id=<?= $resultados['id'] ?>" class="font-id-css ">
                                     <?= $resultados['visitante'] ?>
                                 </a>
                             </span>
                             <span class="table-designer"><?= $resultados['empresa']; ?></span>
-                            <span class="table-designer d-flex text-center"><?= $resultados['area_da_visita']; ?></span>
+                            <span class="table-designer d-flex text-center">
+                                <?php
+                                if ($resultados['motivo_visita'] == "Entrevista") { ?>
+                                    Entrevista
+                                <?php   } ?>
+                                <?= $resultados['area_da_visita']; ?>
+                            </span>
                             <span class="table-designer"><?= date('d/m/Y - H:i', strtotime($resultados['periodo_visita_de'])) ?></span>
 
                             <form action="../DB_Querys/aprovacao.php" method="POST" class="d-flex w-form">
