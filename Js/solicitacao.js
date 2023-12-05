@@ -47,20 +47,17 @@ function validarForm() {
         spanCPF.innerHTML = "CPF inválido!";
 
         resultadoDiv.appendChild(spanCPF);
-
         // Indicar que há um erro
         hasError = true;
     } else {
         // Se o CPF for válido, remover qualquer mensagem de erro existente
         resultadoDiv.innerHTML = "";
     }
-
     // Impedir o envio do formulário se houver algum erro
     if (hasError) {
         form.action = "";
         return false;
     }
-
     // Se não houver erros, continuar com a submissão do formulário
     resultadoDiv.innerText = 'CPF válido!';
     form.action = "../DB_Querys/solicitacaoController.php";
