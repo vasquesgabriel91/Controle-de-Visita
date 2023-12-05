@@ -55,7 +55,6 @@ function login($dbDB, $email, $senha){
                 $_SESSION["celular"] = $resultado['celular'];
                 $_SESSION["nome"] = $resultado['nome'];
                 header("location: home.php");
-                exit;
             } else {
                 $usuarioExiste = "Senha inválida";
             }
