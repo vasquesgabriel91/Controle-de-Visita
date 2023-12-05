@@ -18,18 +18,53 @@ function validarCPF(cpf) {
 function validarForm() {
     let cpfInput = document.getElementById('cpf');
     let resultadoDiv = document.getElementById('resultado');
-    let form = document.getElementById('myForm'); // Set the form ID
+    let form = document.getElementById('myForm');
 
-    if (validarCPF(cpfInput.value)) {
-        resultadoDiv.innerText = 'CPF válido!';
-        form.action = "../DB_Querys/solicitacaoController.php"; // Set the action for valid CPF
-        return true; // Allow form submission
+    const select = document.getElementById('motivo_visita');
+    const integracao = document.getElementById('integracao');
+    let option = select.value;
+    integracao.innerHTML = "";
+
+    let hasError = false; // Variável para rastrear se há algum erro
+
+    if (option === "Selecione o motivo da visita") {
+        const spanMotivo = document.createElement("span");
+        spanMotivo.style.color = "red";
+        spanMotivo.innerHTML = "Você deve escolher o motivo da visita";
+
+        integracao.appendChild(spanMotivo);
+
+        // Indicar que há um erro
+        hasError = true;
     } else {
-        resultadoDiv.innerText = 'CPF inválido!';
-        form.action = ""; // Clear the action for invalid CPF
-        return false; // Prevent form submission
+        // Se a opção for válida, remover qualquer mensagem de erro existente
+        integracao.innerHTML = "";
     }
 
+    if (!validarCPF(cpfInput.value)) {
+        const spanCPF = document.createElement("span");
+        spanCPF.style.color = "red";
+        spanCPF.innerHTML = "CPF inválido!";
+
+        resultadoDiv.appendChild(spanCPF);
+
+        // Indicar que há um erro
+        hasError = true;
+    } else {
+        // Se o CPF for válido, remover qualquer mensagem de erro existente
+        resultadoDiv.innerHTML = "";
+    }
+
+    // Impedir o envio do formulário se houver algum erro
+    if (hasError) {
+        form.action = "";
+        return false;
+    }
+
+    // Se não houver erros, continuar com a submissão do formulário
+    resultadoDiv.innerText = 'CPF válido!';
+    form.action = "../DB_Querys/solicitacaoController.php";
+    return true;
 }
 
 function validarForm_Update() {

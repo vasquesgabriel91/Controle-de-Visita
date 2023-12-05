@@ -65,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         inserirSolicitacao($dbDB, $nome, $celular, $cpf, $email, $data_entrevista, $motivo_visita, $identificador);
     }
 }
+
 function readSolicitacaoEntrevista($dbDB)
 {
     $read = $dbDB->prepare("SELECT * FROM Visitante WHERE motivo_visita = 'Entrevista' ORDER BY id ASC");

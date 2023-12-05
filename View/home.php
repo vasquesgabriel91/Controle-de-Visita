@@ -3,7 +3,6 @@
 
 <?php
 
-$paginas =  $_SESSION["paginas"];
 $resultad = paginacaoHome($dbDB, $paginaAtual = 1, $limite = 5);
 //Visitas por Data atual 
 $dia_Atual = date('d/m/Y'); // Formato: Mês/Dia/Ano
@@ -140,17 +139,17 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
             <a href="?paginaAtual=1" class="me-2 text-decoration-none  color-paginacao">Primeira</a>
             <?php if ($paginaAtual > 1) : ?>
                 <a href="?paginaAtual=<?= $paginaAtual - 1 ?>">
-                <?php endif; ?>
-                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
-                    <path d="M10 1L2 5.76191L10 11" stroke="#004159" stroke-width="2" stroke-linecap="round" />
-                </svg>
+                    <?php endif; ?>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" fill="none">
+                        <path d="M10 1L2 5.76191L10 11" stroke="#004159" stroke-width="2" stroke-linecap="round" />
+                    </svg>
                 </a>
 
                 <div class="d-flex align-items-center justify-content-center circle-css">
                     <span><?= $paginaAtual ?></span>
                 </div>
 
-                <?php if ($paginaAtual < $paginas) : ?>
+                <?php if ($paginaAtual < $paginas =  $_SESSION["paginas"]) : ?>
                     <a href="?paginaAtual=<?= $paginaAtual + 1 ?>">
                     <?php endif; ?>
 
@@ -158,7 +157,7 @@ $resultadosHoje = $visitas_Hoje->fetchAll(PDO::FETCH_ASSOC);
                         <path d="M1 11L9 6.23809L1 1" stroke="#004159" stroke-width="2" stroke-linecap="round" />
                     </svg>
                     </a>
-                    <a href="?paginaAtual=<?= $paginas ?>" class="ms-2 text-decoration-none  color-paginacao">Ultima</a>
+                    <a href="?paginaAtual=<?= $paginas =  $_SESSION["paginas"] ?>" class="ms-2 text-decoration-none  color-paginacao">Ultima</a>
         </div>
     </div>
 </div>

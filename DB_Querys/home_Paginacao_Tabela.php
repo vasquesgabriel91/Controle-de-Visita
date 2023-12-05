@@ -28,7 +28,7 @@ if($paginaAtual){
     $resultad = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
     $registro = $dbDB->query("SELECT COUNT(id) as count FROM Visitante WHERE motivo_visita != 'Entrevista'")->fetch()["count"];
-    $_SESSION["paginas"] = $paginas = ceil($registro / $limite);
+    $_SESSION["paginas"]  = ceil($registro / $limite);
     return $resultad;
     
     }
@@ -46,4 +46,4 @@ if($paginaAtual){
 //     $consulta->execute();
 // }
 
-// $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
+// $resultad = $consulta->fetchAll(PDO::FETCH_ASSOC);

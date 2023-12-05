@@ -87,7 +87,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
 
                 <div class="d-flex justify-content-center mt-4 mb-4">
-                    <input type="submit" value="Enviar" class="btn-submit-css mt-3 " onsubmit="validarForm(event)">
+                    <input type="submit" value="Enviar" class="btn-submit-css mt-3 ">
                 </div>
             </form>
         </div>
