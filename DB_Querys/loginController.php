@@ -48,7 +48,6 @@ function login($dbDB, $email, $senha){
             $email_login = $resultado['email'];
             $senha_hash_login = $resultado['senha'];
             if (password_verify($senha, $senha_hash_login)) {
-                session_start();
                 $_SESSION["loggedin"] = true;
                 $_SESSION["id"] = $resultado['id'];
                 $_SESSION["email"] = $email;
